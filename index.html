@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>防災教育 授業づくりナビ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+/*── リセット & 変数 ──*/
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0d2540;
+  --navy2:#163660;
+  --sky:#2979b0;
+  --sky-lt:#4a9fd4;
+  --orange:#e8610a;
+  --orange-lt:#f28b3a;
+  --green:#1a8a5a;
+  --green-lt:#27b570;
+  --red:#c0392b;
+  --gold:#d4a017;
+  --bg:#f0f4f9;
+  --surface:#ffffff;
+  --text:#1a2535;
+  --muted:#5a6a82;
+  --border:#c8d8ea;
+  --radius:12px;
+  --shadow:0 4px 20px rgba(13,37,64,0.10);
+  --shadow-lg:0 8px 40px rgba(13,37,64,0.16);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
+a{color:inherit;text-decoration:none}
+
+/*── ヘッダー ──*/
+header{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 60%,#1c4a7a 100%);color:#fff;padding:0;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(0,0,0,0.3)}
+.header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0.9rem 1.5rem;gap:1rem}
+.logo{display:flex;align-items:center;gap:0.8rem}
+.logo-icon{width:42px;height:42px;background:linear-gradient(135deg,var(--orange),var(--orange-lt));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;box-shadow:0 2px 8px rgba(232,97,10,0.4)}
+.logo-text{display:flex;flex-direction:column}
+.logo-title{font-size:1.05rem;font-weight:700;letter-spacing:0.04em;line-height:1.2}
+.logo-sub{font-size:0.65rem;letter-spacing:0.1em;opacity:0.75;font-weight:300}
+nav{display:flex;gap:0.3rem;flex-wrap:wrap}
+nav a{padding:0.35rem 0.8rem;border-radius:6px;font-size:0.78rem;font-weight:500;letter-spacing:0.04em;color:rgba(255,255,255,0.85);transition:background 0.2s,color 0.2s}
+nav a:hover{background:rgba(255,255,255,0.15);color:#fff}
+
+/*── ヒーロー ──*/
+.hero{background:linear-gradient(160deg,var(--navy) 0%,#1a4472 50%,#0d3a6e 100%);color:#fff;padding:4.5rem 1.5rem 5rem;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+.hero-eyebrow{display:inline-block;background:rgba(232,97,10,0.2);border:1px solid rgba(232,97,10,0.4);color:var(--orange-lt);font-size:0.72rem;letter-spacing:0.16em;font-weight:500;padding:0.3rem 1rem;border-radius:20px;margin-bottom:1.2rem}
+.hero h1{font-family:'Noto Serif JP',serif;font-size:clamp(1.7rem,5vw,2.8rem);font-weight:700;line-height:1.3;margin-bottom:1rem;letter-spacing:0.02em}
+.hero h1 em{color:var(--orange-lt);font-style:normal;border-bottom:2px solid var(--orange-lt)}
+.hero p{font-size:0.95rem;opacity:0.85;max-width:640px;margin:0 auto 2rem;font-weight:300;line-height:1.9}
+.hero-badges{display:flex;justify-content:center;gap:0.6rem;flex-wrap:wrap;margin-bottom:2.4rem}
+.badge{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:0.3rem 0.9rem;font-size:0.73rem;font-weight:500}
+.hero-cta{display:inline-flex;align-items:center;gap:0.5rem;background:var(--orange);color:#fff;padding:0.85rem 2rem;border-radius:8px;font-weight:700;font-size:0.9rem;letter-spacing:0.05em;box-shadow:0 4px 20px rgba(232,97,10,0.4);transition:transform 0.2s,box-shadow 0.2s}
+.hero-cta:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(232,97,10,0.5)}
+
+/*── セクション共通 ──*/
+section{padding:4rem 1.5rem}
+.container{max-width:1100px;margin:0 auto}
+.section-label{display:flex;align-items:center;gap:0.6rem;margin-bottom:0.6rem}
+.section-label span{width:28px;height:3px;background:var(--orange);border-radius:2px}
+.section-label p{font-size:0.7rem;letter-spacing:0.2em;font-weight:700;color:var(--orange);text-transform:uppercase}
+h2{font-family:'Noto Serif JP',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:700;margin-bottom:0.6rem;letter-spacing:0.02em;color:var(--navy)}
+.section-desc{color:var(--muted);font-size:0.88rem;max-width:600px;margin-bottom:2.5rem;line-height:1.8}
+
+/*── リテラシー4段階 ──*/
+#literacy{background:linear-gradient(180deg,#e8f2fb 0%,var(--bg) 100%)}
+.literacy-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.2rem}
+.lit-card{background:var(--surface);border-radius:var(--radius);padding:1.8rem 1.5rem;box-shadow:var(--shadow);border-top:4px solid var(--sky);position:relative;overflow:hidden;transition:transform 0.2s,box-shadow 0.2s}
+.lit-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.lit-card:nth-child(1){border-top-color:var(--sky)}
+.lit-card:nth-child(2){border-top-color:var(--green)}
+.lit-card:nth-child(3){border-top-color:var(--orange)}
+.lit-card:nth-child(4){border-top-color:var(--red)}
+.lit-num{font-size:3rem;font-weight:700;opacity:0.07;position:absolute;top:0.5rem;right:1rem;line-height:1;font-family:'Noto Serif JP',serif}
+.lit-icon{font-size:2rem;margin-bottom:0.8rem}
+.lit-card h3{font-size:1.05rem;font-weight:700;color:var(--navy);margin-bottom:0.5rem}
+.lit-card p{font-size:0.82rem;color:var(--muted);line-height:1.7}
+.lit-tag{display:inline-block;margin-top:0.8rem;font-size:0.68rem;font-weight:700;letter-spacing:0.1em;padding:0.2rem 0.6rem;border-radius:4px;background:#e8f2fb;color:var(--sky)}
+.lit-card:nth-child(2) .lit-tag{background:#e0f5ec;color:var(--green)}
+.lit-card:nth-child(3) .lit-tag{background:#fdf0e6;color:var(--orange)}
+.lit-card:nth-child(4) .lit-tag{background:#fdecea;color:var(--red)}
+
+/*── 授業ビルダー ──*/
+#builder{background:var(--surface)}
+.builder-wrapper{display:grid;grid-template-columns:260px 1fr;gap:1.5rem;align-items:start}
+.builder-sidebar{background:#f5f8fd;border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;position:sticky;top:80px}
+.builder-sidebar h3{font-size:0.8rem;letter-spacing:0.12em;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:1rem}
+.step-list{display:flex;flex-direction:column;gap:0.4rem}
+.step-btn{display:flex;align-items:center;gap:0.7rem;padding:0.65rem 0.9rem;border-radius:8px;border:none;background:transparent;cursor:pointer;font-family:inherit;font-size:0.83rem;font-weight:500;color:var(--muted);text-align:left;width:100%;transition:background 0.2s,color 0.2s}
+.step-btn .step-num{width:24px;height:24px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;flex-shrink:0;transition:background 0.2s,color 0.2s}
+.step-btn.active,.step-btn:hover{background:#e8f0fa;color:var(--navy)}
+.step-btn.active .step-num{background:var(--sky);color:#fff}
+.step-btn.done .step-num{background:var(--green);color:#fff}
+.step-btn.done .step-num::after{content:'✓'}
+.step-btn.done .step-label{text-decoration:line-through;opacity:0.6}
+.builder-main{background:#f9fbff;border:1px solid var(--border);border-radius:var(--radius);padding:2rem;min-height:480px}
+.step-panel{display:none}
+.step-panel.active{display:block}
+.step-panel h3{font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:0.4rem}
+.step-panel .hint{font-size:0.8rem;color:var(--muted);margin-bottom:1.4rem;line-height:1.7}
+.form-row{margin-bottom:1.2rem}
+label{display:block;font-size:0.78rem;font-weight:700;color:var(--navy);margin-bottom:0.4rem}
+select,input[type="text"],textarea{width:100%;padding:0.65rem 0.9rem;border:1.5px solid var(--border);border-radius:8px;font-family:inherit;font-size:0.85rem;color:var(--text);background:#fff;transition:border-color 0.2s,box-shadow 0.2s;outline:none}
+select:focus,input[type="text"]:focus,textarea:focus{border-color:var(--sky);box-shadow:0 0 0 3px rgba(41,121,176,0.12)}
+textarea{resize:vertical;min-height:100px;line-height:1.7}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.checkbox-group{display:flex;flex-direction:column;gap:0.5rem}
+.checkbox-group label{display:flex;align-items:center;gap:0.6rem;cursor:pointer;font-weight:400;color:var(--text);font-size:0.85rem}
+.checkbox-group input[type="checkbox"]{width:16px;height:16px;accent-color:var(--sky);cursor:pointer;flex-shrink:0}
+.tag-row{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.5rem}
+.tag-btn{padding:0.35rem 0.9rem;border-radius:20px;border:1.5px solid var(--border);background:#fff;font-size:0.78rem;font-family:inherit;cursor:pointer;color:var(--muted);transition:all 0.2s;font-weight:500}
+.tag-btn:hover{border-color:var(--sky);color:var(--sky);background:#e8f2fb}
+.tag-btn.selected{border-color:var(--sky);background:var(--sky);color:#fff}
+.btn-row{display:flex;justify-content:flex-end;gap:0.8rem;margin-top:1.6rem;padding-top:1.2rem;border-top:1px solid var(--border)}
+.btn{padding:0.65rem 1.6rem;border-radius:8px;border:none;font-family:inherit;font-size:0.85rem;font-weight:700;cursor:pointer;transition:transform 0.15s,box-shadow 0.15s}
+.btn-secondary{background:#eef2f8;color:var(--muted)}
+.btn-secondary:hover{background:var(--border)}
+.btn-primary{background:var(--sky);color:#fff;box-shadow:0 2px 12px rgba(41,121,176,0.3)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 18px rgba(41,121,176,0.4)}
+.btn-success{background:var(--green);color:#fff;box-shadow:0 2px 12px rgba(26,138,90,0.3)}
+.btn-success:hover{transform:translateY(-1px);box-shadow:0 4px 18px rgba(26,138,90,0.4)}
+
+/*── 出力プレビュー ──*/
+#output-section{display:none;background:var(--surface);border:2px solid var(--green);border-radius:var(--radius);padding:2rem;margin-top:1.5rem;position:relative}
+#output-section::before{content:'授業案プレビュー';position:absolute;top:-12px;left:1.2rem;background:var(--green);color:#fff;font-size:0.7rem;font-weight:700;letter-spacing:0.12em;padding:0.2rem 0.8rem;border-radius:4px}
+.output-grid{display:grid;gap:0.8rem}
+.output-row{display:grid;grid-template-columns:120px 1fr;gap:0.8rem;border-bottom:1px dashed var(--border);padding-bottom:0.8rem;align-items:start}
+.output-row:last-child{border-bottom:none}
+.output-label{font-size:0.75rem;font-weight:700;color:var(--muted);letter-spacing:0.08em;padding-top:0.1rem}
+.output-val{font-size:0.88rem;color:var(--text);line-height:1.7}
+.output-actions{display:flex;gap:0.8rem;margin-top:1.4rem;justify-content:flex-end}
+
+/*── 参考サイト ──*/
+#resources{background:linear-gradient(180deg,var(--bg) 0%,#e0ecf8 100%)}
+.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1.2rem}
+.resource-card{background:var(--surface);border-radius:var(--radius);padding:1.5rem;box-shadow:var(--shadow);border-left:4px solid var(--sky);display:flex;flex-direction:column;gap:0.7rem;transition:transform 0.2s,box-shadow 0.2s}
+.resource-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.resource-card:nth-child(2){border-left-color:var(--green)}
+.resource-card:nth-child(3){border-left-color:var(--orange)}
+.resource-card:nth-child(4){border-left-color:var(--red)}
+.resource-header{display:flex;align-items:center;gap:0.7rem}
+.resource-badge{font-size:0.68rem;font-weight:700;letter-spacing:0.08em;padding:0.2rem 0.6rem;border-radius:4px;background:#e8f2fb;color:var(--sky);white-space:nowrap}
+.resource-card:nth-child(2) .resource-badge{background:#e0f5ec;color:var(--green)}
+.resource-card:nth-child(3) .resource-badge{background:#fdf0e6;color:var(--orange)}
+.resource-card:nth-child(4) .resource-badge{background:#fdecea;color:var(--red)}
+.resource-card h3{font-size:0.9rem;font-weight:700;color:var(--navy)}
+.resource-card p{font-size:0.8rem;color:var(--muted);line-height:1.7;flex:1}
+.resource-link{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.78rem;font-weight:700;color:var(--sky);padding:0.45rem 1rem;border:1.5px solid var(--sky);border-radius:6px;align-self:flex-start;transition:background 0.2s,color 0.2s}
+.resource-link:hover{background:var(--sky);color:#fff}
+.resource-card:nth-child(2) .resource-link{color:var(--green);border-color:var(--green)}
+.resource-card:nth-child(2) .resource-link:hover{background:var(--green);color:#fff}
+.resource-card:nth-child(3) .resource-link{color:var(--orange);border-color:var(--orange)}
+.resource-card:nth-child(3) .resource-link:hover{background:var(--orange);color:#fff}
+.resource-card:nth-child(4) .resource-link{color:var(--red);border-color:var(--red)}
+.resource-card:nth-child(4) .resource-link:hover{background:var(--red);color:#fff}
+
+/*── チェックリスト ──*/
+#checklist{background:var(--surface)}
+.checklist-wrapper{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
+.check-group{background:#f5f8fd;border-radius:var(--radius);padding:1.5rem;border:1px solid var(--border)}
+.check-group h3{font-size:0.85rem;font-weight:700;color:var(--navy);margin-bottom:1rem;padding-bottom:0.6rem;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:0.5rem}
+.check-item{display:flex;align-items:flex-start;gap:0.7rem;padding:0.6rem 0;border-bottom:1px dashed #e2eaf4;cursor:pointer}
+.check-item:last-child{border-bottom:none}
+.check-box{width:20px;height:20px;border-radius:4px;border:2px solid var(--border);background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.2s;margin-top:0.1rem}
+.check-item.checked .check-box{background:var(--green);border-color:var(--green);color:#fff}
+.check-item.checked .check-box::after{content:'✓';font-size:0.75rem;font-weight:700}
+.check-text{font-size:0.83rem;line-height:1.6;color:var(--text)}
+.check-item.checked .check-text{text-decoration:line-through;color:var(--muted)}
+.progress-bar-wrap{background:#e0ecf8;border-radius:8px;height:8px;overflow:hidden;margin-top:1rem}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--sky),var(--green));border-radius:8px;transition:width 0.4s ease}
+.progress-label{font-size:0.72rem;color:var(--muted);margin-top:0.4rem;text-align:right}
+
+/*── フッター ──*/
+footer{background:var(--navy);color:rgba(255,255,255,0.7);text-align:center;padding:2rem 1.5rem;font-size:0.78rem;line-height:2}
+footer strong{color:#fff}
+
+/*── アニメーション ──*/
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease}
+.fade-in.visible{opacity:1;transform:none}
+
+/*── レスポンシブ ──*/
+@media(max-width:768px){
+  .builder-wrapper{grid-template-columns:1fr}
+  .builder-sidebar{position:static;display:flex;flex-direction:row;flex-wrap:wrap;gap:0.4rem;padding:1rem}
+  .builder-sidebar h3{width:100%;margin-bottom:0.4rem}
+  .step-list{flex-direction:row;flex-wrap:wrap}
+  .step-btn{width:auto;padding:0.4rem 0.7rem;font-size:0.75rem}
+  .grid-2{grid-template-columns:1fr}
+  nav{display:none}
+  .output-row{grid-template-columns:1fr}
+  .output-label{font-weight:700;color:var(--sky)}
+}
+@media(max-width:480px){
+  .hero{padding:3rem 1rem 3.5rem}
+  section{padding:3rem 1rem}
+}
+</style>
+</head>
+<body>
+
+<!--── ヘッダー ──-->
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">🛡️</div>
+      <div class="logo-text">
+        <span class="logo-title">防災教育 授業づくりナビ</span>
+        <span class="logo-sub">教員向け授業作成支援サイト</span>
+      </div>
+    </div>
+    <nav>
+      <a href="#literacy">防災リテラシー</a>
+      <a href="#builder">授業ビルダー</a>
+      <a href="#checklist">チェックリスト</a>
+      <a href="#resources">参考サイト</a>
+    </nav>
+  </div>
+</header>
+
+<!--── ヒーロー ──-->
+<div class="hero">
+  <div class="hero-eyebrow">教員向け 防災教育支援ツール</div>
+  <h1>子どもたちに届ける<br/><em>いのちを守る学び</em></h1>
+  <p>地震・洪水・台風……いつ起きるかわからない災害に対応する力を育てる授業を、<br/>ステップに沿って誰でも簡単に設計できます。</p>
+  <div class="hero-badges">
+    <span class="badge">📚 小・中・高校対応</span>
+    <span class="badge">🗂 4教科横断</span>
+    <span class="badge">✏️ ワークシート生成</span>
+    <span class="badge">🔗 外部教材リンク</span>
+  </div>
+  <a class="hero-cta" href="#builder">授業をつくりはじめる →</a>
+</div>
+
+<!--── 防災リテラシー4段階 ──-->
+<section id="literacy">
+  <div class="container fade-in">
+    <div class="section-label"><span></span><p>Framework</p></div>
+    <h2>防災リテラシー 4段階モデル</h2>
+    <p class="section-desc">国土交通省「防災学習ポータル」の考え方をベースに、授業設計の軸となる4つのステージを整理しました。</p>
+    <div class="literacy-grid">
+      <div class="lit-card">
+        <div class="lit-num">1</div>
+        <div class="lit-icon">🔍</div>
+        <h3>知る</h3>
+        <p>地震・洪水・土砂災害のしくみ、自分の地域のハザードマップ、過去の災害事例を理解する。</p>
+        <span class="lit-tag">理科 / 社会</span>
+      </div>
+      <div class="lit-card">
+        <div class="lit-num">2</div>
+        <div class="lit-icon">🏠</div>
+        <h3>備える</h3>
+        <p>避難経路の確認、防災グッズの準備、家族や地域との連絡方法の計画を学ぶ。</p>
+        <span class="lit-tag">生活 / 道徳</span>
+      </div>
+      <div class="lit-card">
+        <div class="lit-num">3</div>
+        <div class="lit-icon">🏃</div>
+        <h3>行動する</h3>
+        <p>避難訓練・シミュレーション、危険回避の判断力、正しい情報の受け取り方を体験する。</p>
+        <span class="lit-tag">総合 / 体育</span>
+      </div>
+      <div class="lit-card">
+        <div class="lit-num">4</div>
+        <div class="lit-icon">🤝</div>
+        <h3>助け合う</h3>
+        <p>要配慮者への支援、地域コミュニティの役割、ボランティア精神と共助の大切さを考える。</p>
+        <span class="lit-tag">道徳 / 公民</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--── 授業ビルダー ──-->
+<section id="builder">
+  <div class="container fade-in">
+    <div class="section-label"><span></span><p>Lesson Builder</p></div>
+    <h2>授業ビルダー</h2>
+    <p class="section-desc">5つのステップで授業案の骨格を作成します。入力内容はリアルタイムでプレビューに反映されます。</p>
+
+    <div class="builder-wrapper">
+      <!--サイドバー-->
+      <aside class="builder-sidebar">
+        <h3>進捗</h3>
+        <div class="step-list">
+          <button class="step-btn active" data-step="1" onclick="goStep(1)">
+            <span class="step-num">1</span>
+            <span class="step-label">基本情報</span>
+          </button>
+          <button class="step-btn" data-step="2" onclick="goStep(2)">
+            <span class="step-num">2</span>
+            <span class="step-label">災害テーマ</span>
+          </button>
+          <button class="step-btn" data-step="3" onclick="goStep(3)">
+            <span class="step-num">3</span>
+            <span class="step-label">学習目標</span>
+          </button>
+          <button class="step-btn" data-step="4" onclick="goStep(4)">
+            <span class="step-num">4</span>
+            <span class="step-label">授業展開</span>
+          </button>
+          <button class="step-btn" data-step="5" onclick="goStep(5)">
+            <span class="step-num">5</span>
+            <span class="step-label">評価・教材</span>
+          </button>
+        </div>
+      </aside>
+
+      <!--メインパネル-->
+      <div class="builder-main">
+
+        <!--STEP1 基本情報-->
+        <div class="step-panel active" id="panel-1">
+          <h3>📋 ステップ1：基本情報</h3>
+          <p class="hint">授業の基本的な枠組みを設定します。</p>
+          <div class="grid-2">
+            <div class="form-row">
+              <label for="grade">対象学年</label>
+              <select id="grade">
+                <option value="">選択してください</option>
+                <optgroup label="小学校">
+                  <option>小学1・2年</option><option>小学3・4年</option><option>小学5・6年</option>
+                </optgroup>
+                <optgroup label="中学校">
+                  <option>中学1年</option><option>中学2年</option><option>中学3年</option>
+                </optgroup>
+                <optgroup label="高等学校">
+                  <option>高校1年</option><option>高校2年</option><option>高校3年</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="form-row">
+              <label for="subject">教科</label>
+              <select id="subject">
+                <option value="">選択してください</option>
+                <option>理科</option><option>社会</option><option>生活</option><option>道徳</option>
+                <option>総合的な学習の時間</option><option>体育</option><option>公民</option><option>その他</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid-2">
+            <div class="form-row">
+              <label for="time">授業時数</label>
+              <select id="time">
+                <option>1時間（45〜50分）</option>
+                <option>2時間（連続）</option>
+                <option>3〜5時間（単元）</option>
+                <option>学期を通じた計画</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label for="season">実施時期</label>
+              <select id="season">
+                <option>1学期（春・梅雨前）</option>
+                <option>夏休み明け（台風シーズン）</option>
+                <option>2学期</option>
+                <option>冬（防火・地震防災月間）</option>
+                <option>3学期</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <label for="unit-name">単元名・授業タイトル</label>
+            <input type="text" id="unit-name" placeholder="例：わたしたちの町を守る〜洪水から命を守ろう〜"/>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="nextStep(1)">次へ →</button>
+          </div>
+        </div>
+
+        <!--STEP2 災害テーマ-->
+        <div class="step-panel" id="panel-2">
+          <h3>🌊 ステップ2：災害テーマの選択</h3>
+          <p class="hint">扱う災害の種類とリテラシーの段階を選びます。複数選択可能です。</p>
+          <div class="form-row">
+            <label>扱う災害の種類</label>
+            <div class="tag-row" id="disaster-tags">
+              <button class="tag-btn" onclick="toggleTag(this)">🌊 洪水・水害</button>
+              <button class="tag-btn" onclick="toggleTag(this)">🌀 台風</button>
+              <button class="tag-btn" onclick="toggleTag(this)">⛰ 土砂崩れ</button>
+              <button class="tag-btn" onclick="toggleTag(this)">🌏 地震</button>
+              <button class="tag-btn" onclick="toggleTag(this)">🌊 津波</button>
+              <button class="tag-btn" onclick="toggleTag(this)">🔥 火災</button>
+              <button class="tag-btn" onclick="toggleTag(this)">🌋 火山噴火</button>
+              <button class="tag-btn" onclick="toggleTag(this)">❄️ 大雪・吹雪</button>
+            </div>
+          </div>
+          <div class="form-row">
+            <label>対象リテラシー段階</label>
+            <div class="checkbox-group">
+              <label><input type="checkbox" name="literacy" value="知る"> 🔍 知る（しくみ・知識の理解）</label>
+              <label><input type="checkbox" name="literacy" value="備える"> 🏠 備える（準備・計画の立案）</label>
+              <label><input type="checkbox" name="literacy" value="行動する"> 🏃 行動する（避難訓練・判断力）</label>
+              <label><input type="checkbox" name="literacy" value="助け合う"> 🤝 助け合う（共助・地域連携）</label>
+            </div>
+          </div>
+          <div class="form-row">
+            <label for="region">地域特性（任意）</label>
+            <input type="text" id="region" placeholder="例：海沿いの市街地 / 山間部の農村 / 都市部"/>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-secondary" onclick="goStep(1)">← 戻る</button>
+            <button class="btn btn-primary" onclick="nextStep(2)">次へ →</button>
+          </div>
+        </div>
+
+        <!--STEP3 学習目標-->
+        <div class="step-panel" id="panel-3">
+          <h3>🎯 ステップ3：学習目標の設定</h3>
+          <p class="hint">授業を通じて子どもたちに身につけてほしいことを整理します。</p>
+          <div class="form-row">
+            <label>目標テンプレートから選ぶ</label>
+            <div class="tag-row" id="goal-tags">
+              <button class="tag-btn" onclick="selectGoal(this,'地域のハザードマップを読み取り、危険箇所を説明できる。')">ハザードマップ読解</button>
+              <button class="tag-btn" onclick="selectGoal(this,'洪水・地震等の発生メカニズムを理解し、図や言葉で表現できる。')">災害のしくみ理解</button>
+              <button class="tag-btn" onclick="selectGoal(this,'避難経路と避難場所を確認し、家族と共有できる計画を立てられる。')">避難計画立案</button>
+              <button class="tag-btn" onclick="selectGoal(this,'緊急時の正しい行動手順を身につけ、訓練で実践できる。')">避難行動の実践</button>
+              <button class="tag-btn" onclick="selectGoal(this,'地域の要配慮者を理解し、共助の大切さを考えられる。')">共助・助け合い</button>
+              <button class="tag-btn" onclick="selectGoal(this,'防災情報（気象警報・避難指示等）を正しく読み取り行動できる。')">防災情報の活用</button>
+            </div>
+          </div>
+          <div class="form-row">
+            <label for="goal-text">学習目標（自由記述）</label>
+            <textarea id="goal-text" placeholder="テンプレートを選ぶか、自由に記入してください。&#10;例：洪水が起きるしくみを理解し、自分の家周辺の危険箇所を地図上で確認できる。"></textarea>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-secondary" onclick="goStep(2)">← 戻る</button>
+            <button class="btn btn-primary" onclick="nextStep(3)">次へ →</button>
+          </div>
+        </div>
+
+        <!--STEP4 授業展開-->
+        <div class="step-panel" id="panel-4">
+          <h3>📝 ステップ4：授業の展開</h3>
+          <p class="hint">授業の流れ（導入・展開・まとめ）と使用する活動を設計します。</p>
+          <div class="form-row">
+            <label for="intro">導入（10分程度）</label>
+            <textarea id="intro" placeholder="例：前回の台風被害のニュース映像を見て、気づいたことを発表する。"></textarea>
+          </div>
+          <div class="form-row">
+            <label for="main">展開（25〜30分）</label>
+            <textarea id="main" placeholder="例：班ごとにハザードマップを見ながら学校周辺の浸水想定区域を調べ、避難経路を考える。"></textarea>
+          </div>
+          <div class="form-row">
+            <label for="wrap">まとめ（10分）</label>
+            <textarea id="wrap" placeholder="例：各班の発表をもとに、クラス全体で安全な避難ルートを確認する。"></textarea>
+          </div>
+          <div class="form-row">
+            <label>活動形態</label>
+            <div class="tag-row" id="activity-tags">
+              <button class="tag-btn" onclick="toggleTag(this)">🧑‍🏫 一斉講義</button>
+              <button class="tag-btn" onclick="toggleTag(this)">👥 グループワーク</button>
+              <button class="tag-btn" onclick="toggleTag(this)">🗺 地図・ハザードマップ活用</button>
+              <button class="tag-btn" onclick="toggleTag(this)">📹 動画視聴</button>
+              <button class="tag-btn" onclick="toggleTag(this)">🏃 避難訓練・体験</button>
+              <button class="tag-btn" onclick="toggleTag(this)">🎮 クイズ・ゲーム</button>
+              <button class="tag-btn" onclick="toggleTag(this)">📝 ワークシート</button>
+              <button class="tag-btn" onclick="toggleTag(this)">👴 地域住民・専門家招待</button>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-secondary" onclick="goStep(3)">← 戻る</button>
+            <button class="btn btn-primary" onclick="nextStep(4)">次へ →</button>
+          </div>
+        </div>
+
+        <!--STEP5 評価・教材-->
+        <div class="step-panel" id="panel-5">
+          <h3>📊 ステップ5：評価方法と使用教材</h3>
+          <p class="hint">授業の評価方法と活用する外部教材を選択します。</p>
+          <div class="form-row">
+            <label>評価方法（複数選択可）</label>
+            <div class="checkbox-group">
+              <label><input type="checkbox" name="eval" value="ワークシートへの記述"> ✏️ ワークシートへの記述</label>
+              <label><input type="checkbox" name="eval" value="発表・プレゼンテーション"> 🗣 発表・プレゼンテーション</label>
+              <label><input type="checkbox" name="eval" value="グループ協議の様子の観察"> 👀 グループ協議の様子（観察評価）</label>
+              <label><input type="checkbox" name="eval" value="振り返りシート（自己評価）"> 📋 振り返りシート（自己評価）</label>
+              <label><input type="checkbox" name="eval" value="防災計画書の作成"> 📑 防災計画書の作成</label>
+              <label><input type="checkbox" name="eval" value="クイズ・小テスト"> 📝 クイズ・小テスト</label>
+            </div>
+          </div>
+          <div class="form-row">
+            <label>活用する外部教材・サイト（複数選択可）</label>
+            <div class="checkbox-group">
+              <label><input type="checkbox" name="material" value="防災学習ポータル（国土交通省）"> 🌊 防災学習ポータル（国土交通省）</label>
+              <label><input type="checkbox" name="material" value="防災危機管理eカレッジ（消防庁）"> 🔥 防災危機管理eカレッジ（消防庁）</label>
+              <label><input type="checkbox" name="material" value="Yahoo!きっず（キーワード検索学習）"> 🔍 Yahoo!きっず</label>
+              <label><input type="checkbox" name="material" value="サイエンスティーム（JST）"> 🧪 サイエンスティーム（JST）</label>
+              <label><input type="checkbox" name="material" value="地域ハザードマップ（国土交通省）"> 🗺 地域ハザードマップ</label>
+              <label><input type="checkbox" name="material" value="気象庁防災教育資料"> ⛈ 気象庁防災教育資料</label>
+            </div>
+          </div>
+          <div class="form-row">
+            <label for="note">備考・補足（任意）</label>
+            <textarea id="note" placeholder="特別な配慮事項、保護者連絡の要否、地域連携の予定など"></textarea>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-secondary" onclick="goStep(4)">← 戻る</button>
+            <button class="btn btn-success" onclick="generateOutput()">授業案を生成する ✓</button>
+          </div>
+        </div>
+
+        <!--出力プレビュー-->
+        <div id="output-section">
+          <div class="output-grid" id="output-grid"></div>
+          <div class="output-actions">
+            <button class="btn btn-secondary" onclick="printOutput()">🖨 印刷する</button>
+            <button class="btn btn-primary" onclick="copyOutput()">📋 テキストをコピー</button>
+          </div>
+        </div>
+
+      </div><!--/.builder-main-->
+    </div><!--/.builder-wrapper-->
+  </div>
+</section>
+
+<!--── 事前チェックリスト ──-->
+<section id="checklist">
+  <div class="container fade-in">
+    <div class="section-label"><span></span><p>Checklist</p></div>
+    <h2>授業準備チェックリスト</h2>
+    <p class="section-desc">授業実施の前に確認しておきたいポイントをまとめました。チェックをタップして進捗を管理できます。</p>
+    <div class="checklist-wrapper">
+      <div class="check-group">
+        <h3>📋 教材・資料の準備</h3>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-text">地域のハザードマップを印刷・準備した</div>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-text">使用する動画・スライドを事前に再生確認した</div>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-text">ワークシートを人数分印刷した</div>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-text">外部サイトのURLをブックマーク・QRコード化した</div>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-text">参考資料・過去の災害事例データを収集した</div>
+        </div>
+        <div id="prog-bar-wrap-1" class="progress-bar-wrap"><div class="progress-bar" id="prog-1" style="width:0%"></div></div>
+        <div class="progress-label" id="prog-label-1">0 / 5</div>
+      </div>
+      <div class="check-group">
+        <h3>🏫 校内連携・環境整備</h3>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-text">管理職・教頭に授業内容を共有した</div>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-text">ICT機器（タブレット・プロジェクター）の動作確認をした</div>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-text">特別な配慮が必要な児童・生徒への対応を確認した</div>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-text">グループ分け・座席配置を検討した</div>
+        </div>
+        <div id="prog-bar-wrap-2" class="progress-bar-wrap"><div class="progress-bar" id="prog-2" style="width:0%"></div></div>
+        <div class="progress-label" id="prog-label-2">0 / 4</div>
+      </div>
+      <div class="check-group">
+        <h3>🌏 地域・外部連携</h3>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-text">地域の避難所・避難経路を自分でも確認した</div>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-text">必要に応じて消防署・役所等に外部講師を依頼した</div>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-text">保護者への事前連絡（家庭での防災確認依頼）を行った</div>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-text">授業後の家庭課題（防災計画書等）を設計した</div>
+        </div>
+        <div id="prog-bar-wrap-3" class="progress-bar-wrap"><div class="progress-bar" id="prog-3" style="width:0%"></div></div>
+        <div class="progress-label" id="prog-label-3">0 / 4</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--── 参考サイト ──-->
+<section id="resources">
+  <div class="container fade-in">
+    <div class="section-label"><span></span><p>Resources</p></div>
+    <h2>参考・連携サイト</h2>
+    <p class="section-desc">授業づくりに活用できる公的機関・教育機関の教材サイトをまとめました。</p>
+    <div class="resource-grid">
+      <div class="resource-card">
+        <div class="resource-header">
+          <span class="resource-badge">子ども向け・情報活用</span>
+        </div>
+        <h3>🔍 Yahoo!きっず</h3>
+        <p>子ども向け安全な検索エンジン。キーワードの決め方から検索結果の読み方まで、情報収集のリテラシーを学べる。防災調べ学習のスタート地点として最適。</p>
+        <a class="resource-link" href="https://kids.yahoo.co.jp/guide/kids/search" target="_blank" rel="noopener">サイトへ →</a>
+      </div>
+      <div class="resource-card">
+        <div class="resource-header">
+          <span class="resource-badge">STEAM教育・探究学習</span>
+        </div>
+        <h3>🧪 サイエンスティーム（JST）</h3>
+        <p>JST運営のSTEAM教育ポータル。先生向け教育事例集・スターターキット、動画教材が充実。防災×理科・社会の横断的な授業づくりのヒントが豊富。</p>
+        <a class="resource-link" href="https://scienceteam.jst.go.jp/" target="_blank" rel="noopener">サイトへ →</a>
+      </div>
+      <div class="resource-card">
+        <div class="resource-header">
+          <span class="resource-badge">動画教材・国交省</span>
+        </div>
+        <h3>🌊 防災学習ポータル（国土交通省）</h3>
+        <p>「知る・備える・行動・助け合う」4段階モデルに基づく体系的な学習サイト。洪水・土砂・地震の動画教材と先生向けページが充実している。</p>
+        <a class="resource-link" href="https://www.mlit.go.jp/river/bousai/education/" target="_blank" rel="noopener">サイトへ →</a>
+      </div>
+      <div class="resource-card">
+        <div class="resource-header">
+          <span class="resource-badge">eラーニング・消防庁</span>
+        </div>
+        <h3>🔥 防災危機管理eカレッジ（消防庁）</h3>
+        <p>総務省消防庁のeラーニングシステム。地震・火災・津波など多数のコースを無料受講可能。中学生・高校生の自学自習や授業補助教材として活用できる。</p>
+        <a class="resource-link" href="https://www.fdma.go.jp/relocation/e-college/index.html" target="_blank" rel="noopener">サイトへ →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--── フッター ──-->
+<footer>
+  <strong>防災教育 授業づくりナビ</strong><br/>
+  本サイトは防災教育の授業設計を支援することを目的として作成されました。<br/>
+  掲載リンク先の内容については各機関にお問い合わせください。
+</footer>
+
+<script>
+/*── ステップ管理 ──*/
+let currentStep = 1;
+const totalSteps = 5;
+
+function goStep(n) {
+  document.querySelector('.step-panel.active')?.classList.remove('active');
+  document.getElementById('panel-' + n)?.classList.add('active');
+  document.querySelectorAll('.step-btn').forEach(btn => {
+    btn.classList.remove('active');
+    if (parseInt(btn.dataset.step) === n) btn.classList.add('active');
+  });
+  currentStep = n;
+}
+
+function nextStep(from) {
+  // mark done
+  const btn = document.querySelector(`.step-btn[data-step="${from}"]`);
+  if (btn) btn.classList.add('done');
+  if (from < totalSteps) goStep(from + 1);
+}
+
+/*── タグトグル ──*/
+function toggleTag(el) {
+  el.classList.toggle('selected');
+}
+
+/*── 目標テンプレート選択 ──*/
+function selectGoal(el, text) {
+  document.querySelectorAll('#goal-tags .tag-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('goal-text').value = text;
+}
+
+/*── 授業案生成 ──*/
+function generateOutput() {
+  const grade = document.getElementById('grade').value || '（未選択）';
+  const subject = document.getElementById('subject').value || '（未選択）';
+  const time = document.getElementById('time').value;
+  const season = document.getElementById('season').value;
+  const unitName = document.getElementById('unit-name').value || '（未入力）';
+  const region = document.getElementById('region').value || '（指定なし）';
+  const goalText = document.getElementById('goal-text').value || '（未入力）';
+  const intro = document.getElementById('intro').value || '（未入力）';
+  const main = document.getElementById('main').value || '（未入力）';
+  const wrap = document.getElementById('wrap').value || '（未入力）';
+  const note = document.getElementById('note').value;
+
+  const disasters = [...document.querySelectorAll('#disaster-tags .tag-btn.selected')].map(b => b.textContent.trim()).join('、') || '（未選択）';
+  const literacies = [...document.querySelectorAll('input[name="literacy"]:checked')].map(i => i.value).join('・') || '（未選択）';
+  const activities = [...document.querySelectorAll('#activity-tags .tag-btn.selected')].map(b => b.textContent.trim()).join('、') || '（未選択）';
+  const evals = [...document.querySelectorAll('input[name="eval"]:checked')].map(i => i.value).join('、') || '（未選択）';
+  const materials = [...document.querySelectorAll('input[name="material"]:checked')].map(i => i.value).join('、') || '（未選択）';
+
+  const rows = [
+    ['単元名', unitName],
+    ['対象学年・教科', `${grade}　${subject}`],
+    ['授業時数・実施時期', `${time}　／　${season}`],
+    ['扱う災害', disasters],
+    ['リテラシー段階', literacies],
+    ['地域特性', region],
+    ['学習目標', goalText],
+    ['導入', intro],
+    ['展開', main],
+    ['まとめ', wrap],
+    ['活動形態', activities],
+    ['評価方法', evals],
+    ['活用教材・サイト', materials],
+  ];
+  if (note) rows.push(['備考', note]);
+
+  const grid = document.getElementById('output-grid');
+  grid.innerHTML = rows.map(([lbl, val]) =>
+    `<div class="output-row"><div class="output-label">${lbl}</div><div class="output-val">${val.replace(/\n/g,'<br/>')}</div></div>`
+  ).join('');
+
+  const out = document.getElementById('output-section');
+  out.style.display = 'block';
+  out.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function printOutput() { window.print(); }
+
+function copyOutput() {
+  const rows = document.querySelectorAll('.output-row');
+  let text = '【防災授業案】\n' + '='.repeat(30) + '\n';
+  rows.forEach(r => {
+    const lbl = r.querySelector('.output-label').textContent;
+    const val = r.querySelector('.output-val').innerText;
+    text += `【${lbl}】\n${val}\n\n`;
+  });
+  navigator.clipboard.writeText(text).then(() => {
+    alert('授業案をクリップボードにコピーしました！');
+  }).catch(() => alert('コピーに失敗しました。'));
+}
+
+/*── チェックリスト ──*/
+function toggleCheck(item) {
+  item.classList.toggle('checked');
+  updateProgress();
+}
+
+function updateProgress() {
+  const groups = document.querySelectorAll('.check-group');
+  groups.forEach((g, i) => {
+    const items = g.querySelectorAll('.check-item');
+    const checked = g.querySelectorAll('.check-item.checked').length;
+    const pct = Math.round((checked / items.length) * 100);
+    const bar = document.getElementById(`prog-${i+1}`);
+    const label = document.getElementById(`prog-label-${i+1}`);
+    if (bar) bar.style.width = pct + '%';
+    if (label) label.textContent = `${checked} / ${items.length}`;
+  });
+}
+
+/*── フェードイン観察 ──*/
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
