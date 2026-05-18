@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>防災教育 授業・研修づくりナビ</title>
+<title>防災教育・計画 づくりナビ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;700&family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet"/>
 <style>
-/*── リセット & 変数 ──*/
+/*── リセット & 基本変数 ──*/
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --navy:#0d2540;
@@ -20,7 +20,6 @@
   --green:#1a8a5a;
   --green-lt:#27b570;
   --red:#c0392b;
-  --gold:#d4a017;
   --bg:#f0f4f9;
   --surface:#ffffff;
   --text:#1a2535;
@@ -30,14 +29,79 @@
   --shadow:0 4px 20px rgba(13,37,64,0.10);
   --shadow-lg:0 8px 40px rgba(13,37,64,0.16);
 }
+
 html{scroll-behavior:smooth}
-body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px; transition: background 0.4s, color 0.4s;}
 a{color:inherit;text-decoration:none}
 
 /*── モード切り替え（表示制御） ──*/
-body[data-mode="kids"] .show-adult, body[data-mode="kids"] .show-leader { display: none !important; }
-body[data-mode="adult"] .show-kids, body[data-mode="adult"] .show-leader { display: none !important; }
-body[data-mode="leader"] .show-kids, body[data-mode="leader"] .show-adult { display: none !important; }
+body:not([data-mode="kids"]) .show-kids { display: none !important; }
+body:not([data-mode="teacher"]) .show-teacher { display: none !important; }
+body:not([data-mode="adult"]) .show-adult { display: none !important; }
+body:not([data-mode="leader"]) .show-leader { display: none !important; }
+
+/* 複数モード共通表示用クラス */
+body[data-mode="kids"] .hide-kids { display: none !important; }
+
+/*── 子どもモード専用のかわいいデザイン（上書き） ──*/
+body[data-mode="kids"] {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  background: #fff9e6; /* やさしいクリーム色 */
+  color: #5c4a3d;
+  font-size: 16px;
+}
+body[data-mode="kids"] header {
+  background: #ffb347;
+  box-shadow: 0 4px 0 rgba(230, 149, 39, 0.5);
+  color: #fff;
+}
+body[data-mode="kids"] .mode-switch {
+  background: rgba(255,255,255,0.3); border: 2px solid #fff;
+}
+body[data-mode="kids"] .mode-switch label { color: #fff; }
+body[data-mode="kids"] .mode-switch label:has(input:checked) {
+  background: #fff; color: #ffb347; box-shadow: 0 2px 0 rgba(0,0,0,0.1); border-radius: 6px;
+}
+body[data-mode="kids"] .hero {
+  background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+  color: #4a4a4a;
+}
+body[data-mode="kids"] .hero h1 {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 900;
+  color: #333;
+  text-shadow: 2px 2px 0px #fff;
+}
+body[data-mode="kids"] .hero h1 em { color: #ff6b6b; border-bottom: 4px dashed #ff6b6b; }
+body[data-mode="kids"] .hero-eyebrow { background: #fff; color: #ffb347; border: 2px solid #ffb347; font-weight: 700;}
+body[data-mode="kids"] .hero-cta { background: #ff6b6b; box-shadow: 0 4px 0 #cc5555; border-radius: 30px; }
+body[data-mode="kids"] .hero-cta:hover { transform: translateY(2px); box-shadow: 0 2px 0 #cc5555; }
+body[data-mode="kids"] h2 { font-family: 'Zen Maru Gothic', sans-serif; color: #ff8c42; }
+body[data-mode="kids"] .section-label p { color: #ff8c42; }
+body[data-mode="kids"] .section-label span { background: #ff8c42; }
+body[data-mode="kids"] .lit-card { border-radius: 24px; border: 4px solid #ffd180; box-shadow: 0 6px 0 #ffe0b2; transform: none;}
+body[data-mode="kids"] .lit-card h3 { color: #ff8c42; font-size: 1.2rem; }
+body[data-mode="kids"] .lit-num { color: #ffb347; opacity: 0.2; font-family: 'Zen Maru Gothic', sans-serif;}
+body[data-mode="kids"] .builder-main { border-radius: 24px; border: 4px solid #a1c4fd; background: #fff; }
+body[data-mode="kids"] .builder-sidebar { border-radius: 24px; border: 4px solid #ffd180; background: #fff; }
+body[data-mode="kids"] .step-btn.active { background: #ffb347; color: #fff; border-radius: 12px; }
+body[data-mode="kids"] .step-btn.active .step-num { background: #fff; color: #ffb347; }
+body[data-mode="kids"] input[type="text"], body[data-mode="kids"] textarea {
+  border: 2px solid #c2e9fb; border-radius: 12px; background: #f4faff;
+}
+body[data-mode="kids"] input[type="text"]:focus, body[data-mode="kids"] textarea:focus {
+  border-color: #ffb347; box-shadow: 0 0 0 4px rgba(255, 179, 71, 0.2);
+}
+body[data-mode="kids"] .tag-btn { border-radius: 20px; border: 2px solid #c2e9fb; color: #555; font-weight: 700; }
+body[data-mode="kids"] .tag-btn.selected { background: #ffb347; border-color: #ffb347; color: #fff; }
+body[data-mode="kids"] .btn-primary { background: #ffb347; box-shadow: 0 4px 0 #e69527; border-radius: 20px; }
+body[data-mode="kids"] .btn-primary:active { transform: translateY(4px); box-shadow: none; }
+body[data-mode="kids"] .btn-success { background: #66cdaa; box-shadow: 0 4px 0 #4ca385; border-radius: 20px; }
+body[data-mode="kids"] .check-group { border-radius: 20px; border: 3px solid #ffd180; background: #fff;}
+body[data-mode="kids"] .check-box { border-radius: 50%; border: 2px solid #c2e9fb; }
+body[data-mode="kids"] .check-item.checked .check-box { background: #ffb347; border-color: #ffb347; }
+body[data-mode="kids"] footer { background: #ffb347; color: #fff; }
+
 
 /*── ヘッダー ──*/
 header{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 60%,#1c4a7a 100%);color:#fff;padding:0;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(0,0,0,0.3)}
@@ -50,10 +114,10 @@ header{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 60%,#1c4a7a
 
 /* モードスイッチャー */
 .mode-switch {
-  display: flex; gap: 0.2rem; background: rgba(0,0,0,0.25); padding: 0.3rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);
+  display: flex; gap: 0.2rem; background: rgba(0,0,0,0.25); padding: 0.3rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap; justify-content: center;
 }
 .mode-switch label {
-  cursor: pointer; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700; color: rgba(255,255,255,0.6); transition: all 0.2s; position: relative;
+  cursor: pointer; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700; color: rgba(255,255,255,0.6); transition: all 0.2s; position: relative; white-space: nowrap;
 }
 .mode-switch input { display: none; }
 .mode-switch label:has(input:checked) { color: #fff; background: var(--sky); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
@@ -101,7 +165,7 @@ h2{font-family:'Noto Serif JP',serif;font-size:clamp(1.4rem,3vw,2rem);font-weigh
 .lit-card:nth-child(3) .lit-tag{background:#fdf0e6;color:var(--orange)}
 .lit-card:nth-child(4) .lit-tag{background:#fdecea;color:var(--red)}
 
-/*── 授業ビルダー ──*/
+/*── ビルダー領域 ──*/
 #builder{background:var(--surface)}
 .builder-wrapper{display:grid;grid-template-columns:260px 1fr;gap:1.5rem;align-items:start}
 .builder-sidebar{background:#f5f8fd;border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;position:sticky;top:80px}
@@ -168,12 +232,6 @@ textarea{resize:vertical;min-height:100px;line-height:1.7}
 .resource-card p{font-size:0.8rem;color:var(--muted);line-height:1.7;flex:1}
 .resource-link{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.78rem;font-weight:700;color:var(--sky);padding:0.45rem 1rem;border:1.5px solid var(--sky);border-radius:6px;align-self:flex-start;transition:background 0.2s,color 0.2s}
 .resource-link:hover{background:var(--sky);color:#fff}
-.resource-card:nth-child(2) .resource-link{color:var(--green);border-color:var(--green)}
-.resource-card:nth-child(2) .resource-link:hover{background:var(--green);color:#fff}
-.resource-card:nth-child(3) .resource-link{color:var(--orange);border-color:var(--orange)}
-.resource-card:nth-child(3) .resource-link:hover{background:var(--orange);color:#fff}
-.resource-card:nth-child(4) .resource-link{color:var(--red);border-color:var(--red)}
-.resource-card:nth-child(4) .resource-link:hover{background:var(--red);color:#fff}
 
 /*── チェックリスト ──*/
 #checklist{background:var(--surface)}
@@ -224,11 +282,14 @@ footer strong{color:#fff}
 <header>
   <div class="header-inner">
     <div class="logo">
-      <div class="logo-icon">🛡️</div>
+      <div class="logo-icon show-kids">🎒</div>
+      <div class="logo-icon hide-kids">🛡️</div>
       <div class="logo-text">
-        <span class="logo-title">防災教育・計画 づくりナビ</span>
+        <span class="logo-title show-kids">ぼうさい探検隊 レポートづくり</span>
+        <span class="logo-title hide-kids">防災教育・計画 づくりナビ</span>
         <span class="logo-sub">
-          <span class="show-kids">教員向け授業作成支援サイト</span>
+          <span class="show-kids">じぶんのまちを調べてみよう！</span>
+          <span class="show-teacher">教員向け授業作成支援サイト</span>
           <span class="show-adult">家庭・職場向け防災計画支援サイト</span>
           <span class="show-leader">地域防災リーダー向け訓練企画サイト</span>
         </span>
@@ -236,53 +297,51 @@ footer strong{color:#fff}
     </div>
     
     <div class="mode-switch">
-      <label><input type="radio" name="mode" value="kids" checked onchange="changeMode(this.value)"> 子ども版</label>
-      <label><input type="radio" name="mode" value="adult" onchange="changeMode(this.value)"> 大人版</label>
-      <label><input type="radio" name="mode" value="leader" onchange="changeMode(this.value)"> 防災リーダー版</label>
+      <label><input type="radio" name="mode" value="kids" checked onchange="changeMode(this.value)"> 子ども版（調べ学習）</label>
+      <label><input type="radio" name="mode" value="teacher" onchange="changeMode(this.value)"> 教職員版（授業案）</label>
+      <label><input type="radio" name="mode" value="adult" onchange="changeMode(this.value)"> 大人版（家庭・職場）</label>
+      <label><input type="radio" name="mode" value="leader" onchange="changeMode(this.value)"> 防災リーダー版（訓練）</label>
     </div>
-
-    <nav>
-      <a href="#literacy">リテラシー段階</a>
-      <a href="#builder">プランビルダー</a>
-      <a href="#checklist">チェックリスト</a>
-      <a href="#resources">参考サイト</a>
-    </nav>
   </div>
 </header>
 
 <div class="hero">
   <div class="hero-eyebrow">
-    <span class="show-kids">教員向け 防災教育支援ツール</span>
+    <span class="show-kids">まちのキケンをさがそう！</span>
+    <span class="show-teacher">教員向け 防災教育支援ツール</span>
     <span class="show-adult">社会人・保護者向け 防災計画ツール</span>
     <span class="show-leader">自主防災組織・リーダー向け 訓練支援ツール</span>
   </div>
   <h1>
-    <span class="show-kids">子どもたちに届ける<br/><em>いのちを守る学び</em></span>
+    <span class="show-kids">じぶんの住んでいるまちの<br/><em>キケンを知ろう！</em></span>
+    <span class="show-teacher">子どもたちに届ける<br/><em>いのちを守る学び</em></span>
     <span class="show-adult">家庭と職場を守る<br/><em>実践的な防災の備え</em></span>
     <span class="show-leader">地域を牽引する<br/><em>次世代の防災力構築</em></span>
   </h1>
   <p>
-    <span class="show-kids">地震・洪水・台風……いつ起きるかわからない災害に対応する力を育てる授業を、<br/>ステップに沿って誰でも簡単に設計できます。</span>
+    <span class="show-kids">地震や台風がきたとき、あなたのまちはどうなるかな？<br/>ハザードマップを見て、安全ににげるための「ぼうさいレポート」をつくろう！</span>
+    <span class="show-teacher">地震・洪水・台風……いつ起きるかわからない災害に対応する力を育てる授業を、<br/>ステップに沿って誰でも簡単に設計できます。</span>
     <span class="show-adult">家庭の備蓄、避難計画、職場での安否確認など、いざという時に動ける<br/>「マイタイムライン」や防災計画を簡単に設計できます。</span>
     <span class="show-leader">地域特性に応じた防災訓練、避難所運営ゲーム（HUG）の実施など、<br/>地域コミュニティのレジリエンスを高める企画を簡単に設計できます。</span>
   </p>
   <div class="hero-badges">
-    <span class="show-kids badge">📚 小・中・高校対応</span>
-    <span class="show-kids badge">🗂 4教科横断</span>
-    <span class="show-kids badge">✏️ ワークシート生成</span>
+    <span class="show-kids badge">🗺️ ハザードマップ活用</span>
+    <span class="show-kids badge">✏️ まとめシート作成</span>
+    
+    <span class="show-teacher badge">📚 小・中・高校対応</span>
+    <span class="show-teacher badge">🗂 4教科横断</span>
     
     <span class="show-adult badge">🏠 家庭・職場向け</span>
     <span class="show-adult badge">🎒 備蓄チェック</span>
-    <span class="show-adult badge">🗺 マイタイムライン</span>
 
     <span class="show-leader badge">🤝 自主防災組織・自治会</span>
     <span class="show-leader badge">⛺ 避難所運営</span>
-    <span class="show-leader badge">🗣 実働訓練・DIG/HUG</span>
     
-    <span class="badge">🔗 外部教材リンク</span>
+    <span class="hide-kids badge">🔗 外部教材リンク</span>
   </div>
   <a class="hero-cta" href="#builder">
-    <span class="show-kids">授業をつくりはじめる →</span>
+    <span class="show-kids">レポートをつくりはじめる →</span>
+    <span class="show-teacher">授業をつくりはじめる →</span>
     <span class="show-adult">計画をつくりはじめる →</span>
     <span class="show-leader">訓練を企画しはじめる →</span>
   </a>
@@ -290,10 +349,14 @@ footer strong{color:#fff}
 
 <section id="literacy">
   <div class="container fade-in">
-    <div class="section-label"><span></span><p>Framework</p></div>
-    <h2>防災リテラシー 4段階モデル</h2>
+    <div class="section-label"><span></span><p class="show-kids">4つのステップ</p><p class="hide-kids">Framework</p></div>
+    <h2>
+      <span class="show-kids">いのちをまもる 4つのちから</span>
+      <span class="hide-kids">防災リテラシー 4段階モデル</span>
+    </h2>
     <p class="section-desc">
-      <span class="show-kids">国土交通省「防災学習ポータル」の考え方をベースに、授業設計の軸となる4つのステージを整理しました。</span>
+      <span class="show-kids">さいがいがおきたとき、じぶんのいのちをまもるための4つのステップだよ。</span>
+      <span class="show-teacher">国土交通省「防災学習ポータル」の考え方をベースに、授業設計の軸となる4つのステージを整理しました。</span>
       <span class="show-adult">個人や家庭が災害から命を守り、生活を再建するための4つのステップを整理しました。</span>
       <span class="show-leader">地域全体の防災力を底上げし、共助のネットワークを構築するための4つのフェーズです。</span>
     </p>
@@ -303,16 +366,19 @@ footer strong{color:#fff}
         <div class="lit-num">1</div>
         <div class="lit-icon">🔍</div>
         <h3>
-          <span class="show-kids">知る</span>
+          <span class="show-kids">しる</span>
+          <span class="show-teacher">知る</span>
           <span class="show-adult">リスクを把握する</span>
           <span class="show-leader">地域特性を分析する</span>
         </h3>
         <p>
-          <span class="show-kids">地震・洪水・土砂災害のしくみ、自分の地域のハザードマップ、過去の災害事例を理解する。</span>
+          <span class="show-kids">じしんや台風がどうして起きるのか、まちのどこがキケンなのかをしらべよう。</span>
+          <span class="show-teacher">地震・洪水・土砂災害のしくみ、自分の地域のハザードマップ、過去の災害事例を理解する。</span>
           <span class="show-adult">自宅や職場のハザードマップを確認し、どのような災害リスクが潜んでいるかを把握する。</span>
           <span class="show-leader">過去の災害履歴、地域の危険箇所、要配慮者の分布など、地域独自の課題を洗い出す。</span>
         </p>
-        <span class="show-kids lit-tag">理科 / 社会</span>
+        <span class="show-kids lit-tag">ハザードマップ</span>
+        <span class="show-teacher lit-tag">理科 / 社会</span>
         <span class="show-adult lit-tag">現状把握</span>
         <span class="show-leader lit-tag">ハザード分析</span>
       </div>
@@ -320,16 +386,19 @@ footer strong{color:#fff}
         <div class="lit-num">2</div>
         <div class="lit-icon">🏠</div>
         <h3>
-          <span class="show-kids">備える</span>
+          <span class="show-kids">そなえる</span>
+          <span class="show-teacher">備える</span>
           <span class="show-adult">家庭・職場で備える</span>
           <span class="show-leader">計画・体制を整える</span>
         </h3>
         <p>
-          <span class="show-kids">避難経路の確認、防災グッズの準備、家族や地域との連絡方法の計画を学ぶ。</span>
+          <span class="show-kids">にげる道や、ひなんばしょをかくにんして、ぼうさいリュックをじゅんびしよう。</span>
+          <span class="show-teacher">避難経路の確認、防災グッズの準備、家族や地域との連絡方法の計画を学ぶ。</span>
           <span class="show-adult">家具の固定、非常持ち出し袋の準備、家族間の連絡ルール、マイタイムラインを作成する。</span>
           <span class="show-leader">地域防災計画の策定、資機材の点検、避難所開設マニュアルの整備を行う。</span>
         </p>
-        <span class="show-kids lit-tag">生活 / 道徳</span>
+        <span class="show-kids lit-tag">じゅんび</span>
+        <span class="show-teacher lit-tag">生活 / 道徳</span>
         <span class="show-adult lit-tag">事前対策</span>
         <span class="show-leader lit-tag">組織体制構築</span>
       </div>
@@ -337,16 +406,19 @@ footer strong{color:#fff}
         <div class="lit-num">3</div>
         <div class="lit-icon">🏃</div>
         <h3>
-          <span class="show-kids">行動する</span>
+          <span class="show-kids">にげる</span>
+          <span class="show-teacher">行動する</span>
           <span class="show-adult">命を守る行動をとる</span>
           <span class="show-leader">実践的な訓練を行う</span>
         </h3>
         <p>
-          <span class="show-kids">避難訓練・シミュレーション、危険回避の判断力、正しい情報の受け取り方を体験する。</span>
+          <span class="show-kids">あぶないと思ったら、すぐに安全なばしょへにげよう。ひなんくんれんをがんばろう。</span>
+          <span class="show-teacher">避難訓練・シミュレーション、危険回避の判断力、正しい情報の受け取り方を体験する。</span>
           <span class="show-adult">気象情報や避難指示を正しく理解し、安全な場所へ速やかに避難する判断力を身につける。</span>
           <span class="show-leader">DIG（災害図上訓練）やHUG（避難所運営ゲーム）、初期消火や救出救護の実働訓練を実施する。</span>
         </p>
-        <span class="show-kids lit-tag">総合 / 体育</span>
+        <span class="show-kids lit-tag">くんれん</span>
+        <span class="show-teacher lit-tag">総合 / 体育</span>
         <span class="show-adult lit-tag">避難行動</span>
         <span class="show-leader lit-tag">実動・図上訓練</span>
       </div>
@@ -354,16 +426,19 @@ footer strong{color:#fff}
         <div class="lit-num">4</div>
         <div class="lit-icon">🤝</div>
         <h3>
-          <span class="show-kids">助け合う</span>
+          <span class="show-kids">たすけあう</span>
+          <span class="show-teacher">助け合う</span>
           <span class="show-adult">生活を再建・共助する</span>
           <span class="show-leader">コミュニティを繋ぐ</span>
         </h3>
         <p>
-          <span class="show-kids">要配慮者への支援、地域コミュニティの役割、ボランティア精神と共助の大切さを考える。</span>
+          <span class="show-kids">かぞくや、まちの人たちと声をかけあって、みんなでたすけあうこころをもとう。</span>
+          <span class="show-teacher">要配慮者への支援、地域コミュニティの役割、ボランティア精神と共助の大切さを考える。</span>
           <span class="show-adult">近隣住民との協力、職場での事業継続（BCP）、復興に向けた支援制度の活用を学ぶ。</span>
           <span class="show-leader">行政・外部ボランティアとの連携、要配慮者支援ネットワークの構築、長期的な復興を牽引する。</span>
         </p>
-        <span class="show-kids lit-tag">道徳 / 公民</span>
+        <span class="show-kids lit-tag">やさしさ</span>
+        <span class="show-teacher lit-tag">道徳 / 公民</span>
         <span class="show-adult lit-tag">共助・再建</span>
         <span class="show-leader lit-tag">連携・復興</span>
       </div>
@@ -373,37 +448,49 @@ footer strong{color:#fff}
 
 <section id="builder">
   <div class="container fade-in">
-    <div class="section-label"><span></span><p>Plan Builder</p></div>
+    <div class="section-label"><span></span><p class="show-kids">Report Builder</p><p class="hide-kids">Plan Builder</p></div>
     <h2>
-      <span class="show-kids">授業ビルダー</span>
+      <span class="show-kids">ぼうさい探検レポートづくり</span>
+      <span class="show-teacher">授業ビルダー</span>
       <span class="show-adult">防災計画ビルダー</span>
       <span class="show-leader">訓練企画ビルダー</span>
     </h2>
-    <p class="section-desc">5つのステップで計画案の骨格を作成します。入力内容はリアルタイムでプレビューに反映されます。</p>
+    <p class="section-desc">
+      <span class="show-kids">しらべたことをじゅんばんに入力していくと、きみだけのレポートがかんせいするよ！</span>
+      <span class="hide-kids">5つのステップで計画案の骨格を作成します。入力内容はリアルタイムでプレビューに反映されます。</span>
+    </p>
 
     <div class="builder-wrapper">
       <aside class="builder-sidebar">
-        <h3>進捗</h3>
+        <h3>
+          <span class="show-kids">すすみぐあい</span>
+          <span class="hide-kids">進捗</span>
+        </h3>
         <div class="step-list">
           <button class="step-btn active" data-step="1" onclick="goStep(1)">
             <span class="step-num">1</span>
-            <span class="step-label">基本情報</span>
+            <span class="step-label show-kids">きほん</span>
+            <span class="step-label hide-kids">基本情報</span>
           </button>
           <button class="step-btn" data-step="2" onclick="goStep(2)">
             <span class="step-num">2</span>
-            <span class="step-label">災害テーマ</span>
+            <span class="step-label show-kids">しらべる災害</span>
+            <span class="step-label hide-kids">災害テーマ</span>
           </button>
           <button class="step-btn" data-step="3" onclick="goStep(3)">
             <span class="step-num">3</span>
-            <span class="step-label">目標設定</span>
+            <span class="step-label show-kids">キケンな場所</span>
+            <span class="step-label hide-kids">目標設定</span>
           </button>
           <button class="step-btn" data-step="4" onclick="goStep(4)">
             <span class="step-num">4</span>
-            <span class="step-label">内容展開</span>
+            <span class="step-label show-kids">やくそく</span>
+            <span class="step-label hide-kids">内容展開</span>
           </button>
           <button class="step-btn" data-step="5" onclick="goStep(5)">
             <span class="step-num">5</span>
-            <span class="step-label">評価・資機材</span>
+            <span class="step-label show-kids">まとめ</span>
+            <span class="step-label hide-kids">評価・資機材</span>
           </button>
         </div>
       </aside>
@@ -411,21 +498,32 @@ footer strong{color:#fff}
       <div class="builder-main">
 
         <div class="step-panel active" id="panel-1">
-          <h3>📋 ステップ1：基本情報</h3>
-          <p class="hint">取り組みの基本的な枠組みを設定します。</p>
+          <h3>
+            <span class="show-kids">📋 ステップ1：きみのことをおしえて</span>
+            <span class="hide-kids">📋 ステップ1：基本情報</span>
+          </h3>
+          <p class="hint">
+            <span class="show-kids">学年となまえ、まちの名前を入力しよう。</span>
+            <span class="hide-kids">取り組みの基本的な枠組みを設定します。</span>
+          </p>
           
           <div class="grid-2">
             <div class="form-row">
               <label>
-                <span class="show-kids">対象学年</span>
+                <span class="show-kids">学年（または ねんれい）</span>
+                <span class="show-teacher">対象学年</span>
                 <span class="show-adult">対象（家族構成・職場規模）</span>
                 <span class="show-leader">対象組織・参加人数</span>
               </label>
-              <input type="text" id="target-input" placeholder="例：小学5・6年 / 4人家族 / 自主防災会 約30名" />
+              <input type="text" id="target-input" placeholder="例：小学4年生 / 大人 / 自主防災会 約30名" />
             </div>
-            <div class="form-row">
+            <div class="form-row show-kids">
+              <label>なまえ</label>
+              <input type="text" id="kids-name" placeholder="きみのなまえ" />
+            </div>
+            <div class="form-row hide-kids">
               <label>
-                <span class="show-kids">教科・領域</span>
+                <span class="show-teacher">教科・領域</span>
                 <span class="show-adult">実施場面</span>
                 <span class="show-leader">訓練種別</span>
               </label>
@@ -433,7 +531,7 @@ footer strong{color:#fff}
             </div>
           </div>
           
-          <div class="grid-2">
+          <div class="grid-2 hide-kids">
             <div class="form-row">
               <label>所要時間</label>
               <select id="time">
@@ -454,8 +552,11 @@ footer strong{color:#fff}
             </div>
           </div>
           <div class="form-row">
-            <label>タイトル（単元名・計画名・訓練名）</label>
-            <input type="text" id="unit-name" placeholder="例：わたしたちの町を守る / 我が家のマイタイムライン / 〇〇地区 HUG訓練"/>
+            <label>
+              <span class="show-kids">しらべる まちのなまえ</span>
+              <span class="hide-kids">タイトル（単元名・計画名・訓練名）</span>
+            </label>
+            <input type="text" id="unit-name" placeholder="例：〇〇市〇〇町 / わたしたちの町を守る"/>
           </div>
           <div class="btn-row">
             <button class="btn btn-primary" onclick="nextStep(1)">次へ →</button>
@@ -463,54 +564,59 @@ footer strong{color:#fff}
         </div>
 
         <div class="step-panel" id="panel-2">
-          <h3>🌊 ステップ2：災害テーマの選択</h3>
-          <p class="hint">扱う災害の種類とリテラシーの段階を選びます。複数選択可能です。</p>
+          <h3>
+            <span class="show-kids">🌊 ステップ2：なにについてしらべる？</span>
+            <span class="hide-kids">🌊 ステップ2：災害テーマの選択</span>
+          </h3>
+          <p class="hint">
+            <span class="show-kids">しらべたい災害（さいがい）をえらぼう。いくつでもえらべるよ。</span>
+            <span class="hide-kids">扱う災害の種類とリテラシーの段階を選びます。複数選択可能です。</span>
+          </p>
           <div class="form-row">
-            <label>扱う災害の種類</label>
+            <label>
+              <span class="show-kids">しらべる 災害の種類</span>
+              <span class="hide-kids">扱う災害の種類</span>
+            </label>
             <div class="tag-row" id="disaster-tags">
-              <button class="tag-btn" onclick="toggleTag(this)">🌊 洪水・水害</button>
-              <button class="tag-btn" onclick="toggleTag(this)">🌀 台風</button>
-              <button class="tag-btn" onclick="toggleTag(this)">⛰ 土砂崩れ</button>
-              <button class="tag-btn" onclick="toggleTag(this)">🌏 地震</button>
-              <button class="tag-btn" onclick="toggleTag(this)">🌊 津波</button>
-              <button class="tag-btn" onclick="toggleTag(this)">🔥 火災</button>
-              <button class="tag-btn" onclick="toggleTag(this)">🌋 火山噴火</button>
-              <button class="tag-btn" onclick="toggleTag(this)">❄️ 大雪・吹雪</button>
+              <button class="tag-btn" onclick="toggleTag(this)">🌊 洪水・水害（大雨）</button>
+              <button class="tag-btn" onclick="toggleTag(this)">🌀 台風（つよい風と雨）</button>
+              <button class="tag-btn" onclick="toggleTag(this)">⛰ 土砂崩れ（がけくずれ）</button>
+              <button class="tag-btn" onclick="toggleTag(this)">🌏 地震（じしん）</button>
+              <button class="tag-btn" onclick="toggleTag(this)">🌊 津波（つなみ）</button>
+              <button class="tag-btn" onclick="toggleTag(this)">🔥 火災（かじ）</button>
             </div>
           </div>
-          <div class="form-row">
+          
+          <div class="form-row hide-kids">
             <label>対象リテラシー段階</label>
             <div class="checkbox-group">
               <label>
                 <input type="checkbox" name="literacy" value="1段階目">
-                <span class="show-kids">🔍 知る（しくみ・知識の理解）</span>
+                <span class="show-teacher">🔍 知る（しくみ・知識の理解）</span>
                 <span class="show-adult">🔍 リスク把握（ハザードマップ確認等）</span>
                 <span class="show-leader">🔍 ハザード分析（地域課題の洗い出し）</span>
               </label>
               <label>
                 <input type="checkbox" name="literacy" value="2段階目">
-                <span class="show-kids">🏠 備える（準備・計画の立案）</span>
+                <span class="show-teacher">🏠 備える（準備・計画の立案）</span>
                 <span class="show-adult">🏠 家庭・職場の備え（備蓄・家具固定）</span>
                 <span class="show-leader">🏠 組織体制構築（計画策定・マニュアル整備）</span>
               </label>
               <label>
                 <input type="checkbox" name="literacy" value="3段階目">
-                <span class="show-kids">🏃 行動する（避難訓練・判断力）</span>
+                <span class="show-teacher">🏃 行動する（避難訓練・判断力）</span>
                 <span class="show-adult">🏃 避難行動（マイタイムライン・判断）</span>
                 <span class="show-leader">🏃 実動訓練（DIG/HUG・避難所開設）</span>
               </label>
               <label>
                 <input type="checkbox" name="literacy" value="4段階目">
-                <span class="show-kids">🤝 助け合う（共助・地域連携）</span>
+                <span class="show-teacher">🤝 助け合う（共助・地域連携）</span>
                 <span class="show-adult">🤝 共助・再建（安否確認・ボランティア）</span>
                 <span class="show-leader">🤝 連携・復興（要配慮者支援・外部連携）</span>
               </label>
             </div>
           </div>
-          <div class="form-row">
-            <label for="region">地域特性（任意）</label>
-            <input type="text" id="region" placeholder="例：海沿いの市街地 / 山間部の農村 / 都市部マンション"/>
-          </div>
+          
           <div class="btn-row">
             <button class="btn btn-secondary" onclick="goStep(1)">← 戻る</button>
             <button class="btn btn-primary" onclick="nextStep(2)">次へ →</button>
@@ -518,39 +624,40 @@ footer strong{color:#fff}
         </div>
 
         <div class="step-panel" id="panel-3">
-          <h3>🎯 ステップ3：目標の設定</h3>
-          <p class="hint">この取り組みを通じて達成したい状態を整理します。</p>
-          <div class="form-row">
+          <h3>
+            <span class="show-kids">🎯 ステップ3：まちのキケンな場所</span>
+            <span class="hide-kids">🎯 ステップ3：目標の設定</span>
+          </h3>
+          <p class="hint">
+            <span class="show-kids">ハザードマップを見て、きみの家のまわりで「あぶない！」と思った場所をかいてみよう。</span>
+            <span class="hide-kids">この取り組みを通じて達成したい状態を整理します。</span>
+          </p>
+          
+          <div class="form-row hide-kids">
             <label>目標テンプレートから選ぶ</label>
-            
-            <div class="tag-row show-kids" id="goal-tags-kids">
+            <div class="tag-row show-teacher" id="goal-tags-teacher">
               <button class="tag-btn" onclick="selectGoal('地域のハザードマップを読み取り、危険箇所を説明できる。')">ハザードマップ読解</button>
               <button class="tag-btn" onclick="selectGoal('洪水・地震等の発生メカニズムを理解し、図や言葉で表現できる。')">災害のしくみ理解</button>
               <button class="tag-btn" onclick="selectGoal('避難経路と避難場所を確認し、家族と共有できる計画を立てられる。')">避難計画立案</button>
-              <button class="tag-btn" onclick="selectGoal('緊急時の正しい行動手順を身につけ、訓練で実践できる。')">避難行動の実践</button>
-              <button class="tag-btn" onclick="selectGoal('地域の要配慮者を理解し、共助の大切さを考えられる。')">共助・助け合い</button>
             </div>
-
             <div class="tag-row show-adult" id="goal-tags-adult">
               <button class="tag-btn" onclick="selectGoal('自宅周辺の災害リスクを把握し、安全な避難ルートを確定する。')">避難ルート確認</button>
               <button class="tag-btn" onclick="selectGoal('最低3日分（推奨1週間分）の備蓄品リストを作成し、不足分を補う。')">備蓄品チェック</button>
               <button class="tag-btn" onclick="selectGoal('家族構成に合わせたマイタイムライン（避難行動計画）を完成させる。')">マイタイムライン作成</button>
-              <button class="tag-btn" onclick="selectGoal('寝室やリビングの家具転倒防止対策を計画・実行する。')">家具固定の実施</button>
-              <button class="tag-btn" onclick="selectGoal('災害用伝言ダイヤル（171）やSNSを活用した安否確認ルールを家族で決める。')">連絡ルールの徹底</button>
             </div>
-
             <div class="tag-row show-leader" id="goal-tags-leader">
               <button class="tag-btn" onclick="selectGoal('DIG（災害図上訓練）を通じて、地域の危険箇所と防災資源を可視化する。')">地域資源の可視化(DIG)</button>
               <button class="tag-btn" onclick="selectGoal('HUG（避難所運営ゲーム）により、多様な避難者への対応力を養う。')">避難所運営力(HUG)</button>
-              <button class="tag-btn" onclick="selectGoal('高齢者や障がい者など要配慮者の安否確認・避難支援の手順を確立する。')">要配慮者支援体制</button>
-              <button class="tag-btn" onclick="selectGoal('トランシーバーや防災行政無線を用いた情報伝達訓練を完遂する。')">情報伝達訓練</button>
               <button class="tag-btn" onclick="selectGoal('初期消火、救出救護、炊き出し等の実働班の動きを確認・習熟する。')">実働班スキル向上</button>
             </div>
-
           </div>
+          
           <div class="form-row">
-            <label for="goal-text">達成目標（自由記述）</label>
-            <textarea id="goal-text" placeholder="テンプレートを選ぶか、自由に記入してください。"></textarea>
+            <label for="goal-text">
+              <span class="show-kids">あぶない場所・気がついたこと</span>
+              <span class="hide-kids">達成目標（自由記述）</span>
+            </label>
+            <textarea id="goal-text" placeholder="例：家のちかくの川は、大雨がふるとあふれるかもしれない。山のちかくは土砂崩れがあぶない。"></textarea>
           </div>
           <div class="btn-row">
             <button class="btn btn-secondary" onclick="goStep(2)">← 戻る</button>
@@ -559,45 +666,45 @@ footer strong{color:#fff}
         </div>
 
         <div class="step-panel" id="panel-4">
-          <h3>📝 ステップ4：内容の展開</h3>
+          <h3>
+            <span class="show-kids">🏃 ステップ4：にげる場所・かぞくのやくそく</span>
+            <span class="hide-kids">📝 ステップ4：内容の展開</span>
+          </h3>
           <p class="hint">
-            <span class="show-kids">授業の流れ（導入・展開・まとめ）を設計します。</span>
+            <span class="show-kids">いざというとき、どこににげる？ かぞくとはどうやってれんらくする？</span>
+            <span class="show-teacher">授業の流れ（導入・展開・まとめ）を設計します。</span>
             <span class="show-adult">話し合いや作業の手順（導入・実践・まとめ）を設計します。</span>
             <span class="show-leader">訓練や会議のタイムスケジュール（開始・実施・振り返り）を設計します。</span>
           </p>
           
           <div class="form-row">
-            <label>1. 導入（きっかけ・動機付け）</label>
-            <textarea id="intro" class="show-kids" placeholder="例：前回の台風被害のニュース映像を見て、気づいたことを発表する。"></textarea>
-            <textarea id="intro-adult" class="show-adult" placeholder="例：近隣地域で起きた過去の災害事例を共有し、危機意識を高める。"></textarea>
-            <textarea id="intro-leader" class="show-leader" placeholder="例：本日の訓練目的の共有と、想定する被害シナリオ（M7クラス地震等）の発表。"></textarea>
+            <label>
+              <span class="show-kids">どこににげる？（ひなん場所）</span>
+              <span class="hide-kids">1. 導入（きっかけ・動機付け）</span>
+            </label>
+            <textarea id="intro" placeholder="例：〇〇小学校の体育館。もし道がとおれなかったら、〇〇公園ににげる。"></textarea>
           </div>
           <div class="form-row">
-            <label>2. 展開（メイン活動・実践）</label>
-            <textarea id="main" class="show-kids" placeholder="例：班ごとにハザードマップを見ながら学校周辺の浸水想定区域を調べ、避難経路を考える。"></textarea>
-            <textarea id="main-adult" class="show-adult" placeholder="例：各部屋の家具配置図を書き出し、転倒防止策が必要な箇所に印をつける。"></textarea>
-            <textarea id="main-leader" class="show-leader" placeholder="例：班ごとに図上訓練（DIG）を行い、危険箇所や要支援者の居場所にシールを貼っていく。"></textarea>
-          </div>
-          <div class="form-row">
-            <label>3. まとめ（振り返り・共有）</label>
-            <textarea id="wrap" class="show-kids" placeholder="例：各班の発表をもとに、クラス全体で安全な避難ルートを確認する。"></textarea>
-            <textarea id="wrap-adult" class="show-adult" placeholder="例：話し合った内容をマイタイムラインシートに清書し、冷蔵庫に貼る。"></textarea>
-            <textarea id="wrap-leader" class="show-leader" placeholder="例：KPT法（良かった点・課題点・次やること）を用いて、訓練の振り返りと計画の見直しを行う。"></textarea>
+            <label>
+              <span class="show-kids">どうやってれんらくする？（かぞくのやくそく）</span>
+              <span class="hide-kids">2. 展開（メイン活動・実践）</span>
+            </label>
+            <textarea id="main" placeholder="例：災害用伝言ダイヤル（171）をつかう。はなればなれになったら、〇〇に集まる。"></textarea>
           </div>
           
-          <div class="form-row">
+          <div class="form-row hide-kids">
+            <label>3. まとめ（振り返り・共有）</label>
+            <textarea id="wrap" placeholder="例：各班の発表をもとに、クラス全体で安全な避難ルートを確認する。"></textarea>
+          </div>
+          
+          <div class="form-row hide-kids">
             <label>主な活動形態・手法</label>
             <div class="tag-row" id="activity-tags">
-              <button class="tag-btn show-kids" onclick="toggleTag(this)">🧑‍🏫 一斉講義</button>
+              <button class="tag-btn show-teacher" onclick="toggleTag(this)">🧑‍🏫 一斉講義</button>
               <button class="tag-btn" onclick="toggleTag(this)">👥 グループワーク</button>
               <button class="tag-btn" onclick="toggleTag(this)">🗺 地図・ハザードマップ活用</button>
-              <button class="tag-btn" onclick="toggleTag(this)">📹 動画視聴</button>
-              <button class="tag-btn show-kids show-leader" onclick="toggleTag(this)">🏃 避難訓練・実働</button>
-              <button class="tag-btn show-leader" onclick="toggleTag(this)">🎮 DIG/HUG（図上訓練）</button>
+              <button class="tag-btn show-teacher show-leader" onclick="toggleTag(this)">🏃 避難訓練・実働</button>
               <button class="tag-btn show-adult" onclick="toggleTag(this)">🎒 備蓄品チェック</button>
-              <button class="tag-btn show-adult" onclick="toggleTag(this)">📱 安否確認ツール体験</button>
-              <button class="tag-btn show-kids show-leader" onclick="toggleTag(this)">📝 ワークシート・付箋</button>
-              <button class="tag-btn show-leader" onclick="toggleTag(this)">👴 専門家・消防署連携</button>
             </div>
           </div>
           <div class="btn-row">
@@ -607,38 +714,45 @@ footer strong{color:#fff}
         </div>
 
         <div class="step-panel" id="panel-5">
-          <h3>📊 ステップ5：確認方法と使用資機材</h3>
-          <p class="hint">取り組みの成果を確認する方法と、活用するリソースを選択します。</p>
-          <div class="form-row">
+          <h3>
+            <span class="show-kids">✏️ ステップ5：わかったこと（まとめ）</span>
+            <span class="hide-kids">📊 ステップ5：確認方法と使用資機材</span>
+          </h3>
+          <p class="hint">
+            <span class="show-kids">まちを調べてみて、わかったことや、これから気をつけたいことを書こう。</span>
+            <span class="hide-kids">取り組みの成果を確認する方法と、活用するリソースを選択します。</span>
+          </p>
+          
+          <div class="form-row show-kids">
+            <label>わかったこと・感想</label>
+            <textarea id="kids-learned" placeholder="例：わたしのまちには川があるから、大雨のときは水があふれないか注意したい。ぼうさいリュックの中身を週末におうちの人とチェックする！"></textarea>
+          </div>
+
+          <div class="form-row hide-kids">
             <label>確認・評価方法（複数選択可）</label>
             <div class="checkbox-group">
               <label><input type="checkbox" name="eval" value="ワークシート・計画書の完成"> 📝 ワークシート・計画書の完成</label>
-              <label class="show-kids show-leader"><input type="checkbox" name="eval" value="発表・プレゼンテーション"> 🗣 発表・プレゼンテーション</label>
-              <label class="show-leader"><input type="checkbox" name="eval" value="訓練後の振り返りアンケート"> 📋 訓練後の振り返りアンケート</label>
+              <label class="show-teacher show-leader"><input type="checkbox" name="eval" value="発表・プレゼンテーション"> 🗣 発表・プレゼンテーション</label>
               <label class="show-adult show-leader"><input type="checkbox" name="eval" value="備蓄品・持ち出し袋の実物確認"> 🎒 備蓄品・持ち出し袋の実物確認</label>
-              <label><input type="checkbox" name="eval" value="自己評価・チェックリスト"> ✅ 自己評価・チェックリスト</label>
-              <label class="show-kids show-adult"><input type="checkbox" name="eval" value="クイズ・小テスト"> 💡 クイズ・理解度チェック</label>
             </div>
           </div>
-          <div class="form-row">
+          <div class="form-row hide-kids">
             <label>活用する外部教材・資料（複数選択可）</label>
             <div class="checkbox-group">
               <label><input type="checkbox" name="material" value="地域ハザードマップ（自治体発行）"> 🗺 地域ハザードマップ（自治体発行）</label>
               <label><input type="checkbox" name="material" value="防災学習ポータル（国土交通省）"> 🌊 防災学習ポータル（国土交通省）</label>
-              <label><input type="checkbox" name="material" value="内閣府 防災情報のページ"> 🏛 内閣府 防災情報のページ</label>
-              <label class="show-kids"><input type="checkbox" name="material" value="Yahoo!きっず"> 🔍 Yahoo!きっず</label>
-              <label class="show-adult"><input type="checkbox" name="material" value="東京防災（PDF版等）"> 🗼 東京防災（各種マニュアル）</label>
-              <label class="show-leader"><input type="checkbox" name="material" value="避難所運営ゲーム HUG（静岡県等）"> 🎮 避難所運営ゲーム HUG</label>
             </div>
           </div>
-          <div class="form-row">
+          
+          <div class="form-row hide-kids">
             <label for="note">備考・補足（任意）</label>
             <textarea id="note" placeholder="特別な配慮事項、必要な予算、関係各所への連絡事項など"></textarea>
           </div>
           <div class="btn-row">
             <button class="btn btn-secondary" onclick="goStep(4)">← 戻る</button>
             <button class="btn btn-success" onclick="generateOutput()">
-              <span class="show-kids">授業案を生成する ✓</span>
+              <span class="show-kids">レポートをかんせいさせる ✨</span>
+              <span class="show-teacher">授業案を生成する ✓</span>
               <span class="show-adult">計画案を生成する ✓</span>
               <span class="show-leader">企画案を生成する ✓</span>
             </button>
@@ -649,7 +763,7 @@ footer strong{color:#fff}
           <div class="output-grid" id="output-grid"></div>
           <div class="output-actions">
             <button class="btn btn-secondary" onclick="printOutput()">🖨 印刷する</button>
-            <button class="btn btn-primary" onclick="copyOutput()">📋 テキストをコピー</button>
+            <button class="btn btn-primary hide-kids" onclick="copyOutput()">📋 テキストをコピー</button>
           </div>
         </div>
 
@@ -658,43 +772,56 @@ footer strong{color:#fff}
 
 <section id="checklist">
   <div class="container fade-in">
-    <div class="section-label"><span></span><p>Checklist</p></div>
-    <h2>事前準備チェックリスト</h2>
-    <p class="section-desc">実施の前に確認しておきたいポイントをまとめました。チェックをタップして進捗を管理できます。</p>
+    <div class="section-label"><span></span><p class="show-kids">Checklist</p><p class="hide-kids">Checklist</p></div>
+    <h2>
+      <span class="show-kids">探検（たんけん）のじゅんび チェックリスト</span>
+      <span class="hide-kids">事前準備チェックリスト</span>
+    </h2>
+    <p class="section-desc">
+      <span class="show-kids">しらべ学習をはじめるとき、できているかチェックしよう！タップするとチェックがつくよ。</span>
+      <span class="hide-kids">実施の前に確認しておきたいポイントをまとめました。チェックをタップして進捗を管理できます。</span>
+    </p>
     
     <div class="checklist-wrapper">
       <div class="check-group">
-        <h3>📋 資料・ツールの準備</h3>
+        <h3>
+          <span class="show-kids">🗺 ハザードマップとじゅんび</span>
+          <span class="hide-kids">📋 資料・ツールの準備</span>
+        </h3>
         <div class="check-item" onclick="toggleCheck(this)">
           <div class="check-box"></div>
-          <div class="check-text">地域のハザードマップ（最新版）を入手・確認した</div>
+          <div class="check-text">
+            <span class="show-kids">じぶんのまちの「ハザードマップ」を見た（インターネットや紙）</span>
+            <span class="hide-kids">地域のハザードマップ（最新版）を入手・確認した</span>
+          </div>
         </div>
-        <div class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-text">使用する動画・スライド、または参考資料を事前に確認した</div>
+        <div class="check-item show-kids" onclick="toggleCheck(this)">
+          <div class="check-box"></div><div class="check-text">メモをするノートとえんぴつ、色えんぴつをじゅんびした</div>
         </div>
-        <div class="check-item show-kids show-leader" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-text">ワークシートや記入用紙を人数分印刷した</div>
+        <div class="check-item hide-kids" onclick="toggleCheck(this)">
+          <div class="check-box"></div><div class="check-text">使用する動画・スライド、または参考資料を事前に確認した</div>
         </div>
-        <div class="check-item show-adult" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-text">マイタイムライン作成用紙や備蓄チェックリストを準備した</div>
-        </div>
-        <div class="check-item show-leader" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-text">付箋、模造紙、マーカー等の文具類を揃えた</div>
+        <div class="check-item show-teacher show-leader" onclick="toggleCheck(this)">
+          <div class="check-box"></div><div class="check-text">ワークシートや記入用紙を人数分印刷した</div>
         </div>
         <div id="prog-bar-wrap-1" class="progress-bar-wrap"><div class="progress-bar" id="prog-1" style="width:0%"></div></div>
       </div>
       
       <div class="check-group">
         <h3>
-          <span class="show-kids">🏫 校内連携・環境整備</span>
+          <span class="show-kids">👨‍👩‍👧 かぞくとのおはなし</span>
+          <span class="show-teacher">🏫 校内連携・環境整備</span>
           <span class="show-adult">🏠 家族・職場内の共有</span>
           <span class="show-leader">⛺ 会場設営・関係者調整</span>
         </h3>
         <div class="check-item show-kids" onclick="toggleCheck(this)">
+          <div class="check-box"></div><div class="check-text">おうちの人に、これから防災についてしらべることを伝えた</div>
+        </div>
+        <div class="check-item show-kids" onclick="toggleCheck(this)">
+          <div class="check-box"></div><div class="check-text">おうちの「ぼうさいリュック」がどこにあるか聞いた</div>
+        </div>
+        
+        <div class="check-item show-teacher" onclick="toggleCheck(this)">
           <div class="check-box"></div><div class="check-text">管理職・教頭に授業内容を共有した</div>
         </div>
         <div class="check-item show-adult" onclick="toggleCheck(this)">
@@ -703,36 +830,22 @@ footer strong{color:#fff}
         <div class="check-item show-leader" onclick="toggleCheck(this)">
           <div class="check-box"></div><div class="check-text">会場（学校体育館や公民館等）の使用許可申請を行った</div>
         </div>
-
-        <div class="check-item" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-text">
-            <span class="show-kids">特別な配慮が必要な児童・生徒への対応を確認した</span>
-            <span class="show-adult">高齢者やペットなど、配慮が必要な家族の避難方法を確認した</span>
-            <span class="show-leader">訓練に参加する要配慮者へのサポート体制を整えた</span>
-          </div>
-        </div>
-        
-        <div class="check-item show-kids show-leader" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-text">グループ分け・座席配置・動線を検討した</div>
-        </div>
-        <div class="check-item show-leader" onclick="toggleCheck(this)">
-          <div class="check-box"></div>
-          <div class="check-text">使用する資機材（発電機、トランシーバー等）の動作確認をした</div>
-        </div>
         <div id="prog-bar-wrap-2" class="progress-bar-wrap"><div class="progress-bar" id="prog-2" style="width:0%"></div></div>
       </div>
 
       <div class="check-group">
         <h3>
-          <span class="show-kids">🌏 地域・外部連携</span>
+          <span class="show-kids">🚶 じっさいに歩いてみる</span>
+          <span class="show-teacher show-leader">🌏 地域・外部連携</span>
           <span class="show-adult">👜 備蓄・持ち出し品の確認</span>
-          <span class="show-leader">🤝 外部機関との連携</span>
         </h3>
-        <div class="check-item show-kids show-adult" onclick="toggleCheck(this)">
-          <div class="check-box"></div><div class="check-text">実際の避難経路（自宅から避難所等）を歩いて危険箇所を確認した</div>
+        <div class="check-item show-kids" onclick="toggleCheck(this)">
+          <div class="check-box"></div><div class="check-text">おうちの人といっしょに、にげる道を歩いてみた</div>
         </div>
+        <div class="check-item show-kids" onclick="toggleCheck(this)">
+          <div class="check-box"></div><div class="check-text">あぶない看板や、こわれそうなブロックべいを見つけた</div>
+        </div>
+
         <div class="check-item show-adult" onclick="toggleCheck(this)">
           <div class="check-box"></div><div class="check-text">非常持ち出し袋の中身（消費期限・電池切れ等）を点検した</div>
         </div>
@@ -740,17 +853,8 @@ footer strong{color:#fff}
           <div class="check-box"></div><div class="check-text">災害用伝言ダイヤル（171）の使い方を確認・テストした</div>
         </div>
 
-        <div class="check-item show-kids show-leader" onclick="toggleCheck(this)">
+        <div class="check-item show-teacher show-leader" onclick="toggleCheck(this)">
           <div class="check-box"></div><div class="check-text">必要に応じて消防署・役所等に外部講師・立会いを依頼した</div>
-        </div>
-        <div class="check-item show-kids" onclick="toggleCheck(this)">
-          <div class="check-box"></div><div class="check-text">保護者への事前連絡（家庭での防災確認依頼）を行った</div>
-        </div>
-        <div class="check-item show-leader" onclick="toggleCheck(this)">
-          <div class="check-box"></div><div class="check-text">自治会回覧板やポスター等で地域住民に広報を行った</div>
-        </div>
-        <div class="check-item show-leader" onclick="toggleCheck(this)">
-          <div class="check-box"></div><div class="check-text">当日の雨天時スケジュールや中止の判断基準を決定した</div>
         </div>
         <div id="prog-bar-wrap-3" class="progress-bar-wrap"><div class="progress-bar" id="prog-3" style="width:0%"></div></div>
       </div>
@@ -762,49 +866,41 @@ footer strong{color:#fff}
   <div class="container fade-in">
     <div class="section-label"><span></span><p>Resources</p></div>
     <h2>参考・連携サイト</h2>
-    <p class="section-desc">取り組みに活用できる公的機関・専門機関の情報サイトをまとめました。</p>
+    <p class="section-desc">
+      <span class="show-kids">しらべ学習にべんりなウェブサイトだよ。クリックして見てみよう！</span>
+      <span class="hide-kids">取り組みに活用できる公的機関・専門機関の情報サイトをまとめました。</span>
+    </p>
     <div class="resource-grid">
       
       <div class="resource-card show-kids">
-        <div class="resource-header"><span class="resource-badge">子ども向け・情報活用</span></div>
+        <div class="resource-header"><span class="resource-badge">子ども向け けんさく</span></div>
         <h3>🔍 Yahoo!きっず</h3>
-        <p>子ども向け安全な検索エンジン。キーワードの決め方から検索結果の読み方まで、防災調べ学習のスタート地点として最適。</p>
-        <a class="resource-link" href="https://kids.yahoo.co.jp/guide/kids/search" target="_blank" rel="noopener">サイトへ →</a>
+        <p>子どもむけの、あんぜんな けんさくエンジン。わからないことばがあったら、ここでしらべてみよう。</p>
+        <a class="resource-link" href="https://kids.yahoo.co.jp/" target="_blank" rel="noopener">サイトへ →</a>
+      </div>
+      
+      <div class="resource-card show-kids">
+        <div class="resource-header"><span class="resource-badge">動画でまなぶ</span></div>
+        <h3>📺 NHK for School</h3>
+        <p>「防災（ぼうさい）」でけんさくすると、じしんや大雨についての わかりやすい動画がたくさん見られるよ。</p>
+        <a class="resource-link" href="https://www2.nhk.or.jp/school/" target="_blank" rel="noopener">サイトへ →</a>
       </div>
 
       <div class="resource-card">
-        <div class="resource-header"><span class="resource-badge">ハザードマップ確認</span></div>
+        <div class="resource-header"><span class="resource-badge">ハザードマップ</span></div>
         <h3>🗺 重ねるハザードマップ（国土地理院）</h3>
-        <p>洪水、土砂災害、津波などのリスク情報を地図上で重ねて確認できるサイト。自宅や学校周辺のリスク把握に必須。</p>
+        <p>
+          <span class="show-kids">じぶんのまちに、どんなキケンがあるのか 地図で見ることができるサイトだよ。</span>
+          <span class="hide-kids">洪水、土砂災害、津波などのリスク情報を地図上で重ねて確認できるサイト。リスク把握に必須。</span>
+        </p>
         <a class="resource-link" href="https://disaportal.gsi.go.jp/" target="_blank" rel="noopener">サイトへ →</a>
       </div>
 
-      <div class="resource-card">
+      <div class="resource-card hide-kids">
         <div class="resource-header"><span class="resource-badge">総合情報・内閣府</span></div>
         <h3>🏛 内閣府 防災情報のページ</h3>
         <p>マイタイムラインの作り方、避難情報（警戒レベル）の解説、各種パンフレットなど、正確な防災知識が得られる公式ポータル。</p>
         <a class="resource-link" href="https://www.bousai.go.jp/" target="_blank" rel="noopener">サイトへ →</a>
-      </div>
-
-      <div class="resource-card show-adult">
-        <div class="resource-header"><span class="resource-badge">実践マニュアル</span></div>
-        <h3>🗼 東京防災（東京都）</h3>
-        <p>東京都発行ですが、全国で役立つ実践的な防災ノウハウが詰まった一冊。PDF等で無料で閲覧でき、備蓄リストなども豊富です。</p>
-        <a class="resource-link" href="https://www.bousai.metro.tokyo.lg.jp/1028036/1028054/index.html" target="_blank" rel="noopener">サイトへ →</a>
-      </div>
-
-      <div class="resource-card show-leader">
-        <div class="resource-header"><span class="resource-badge">図上訓練マニュアル</span></div>
-        <h3>🎮 避難所運営ゲーム HUG（静岡県）</h3>
-        <p>静岡県が開発した、避難所運営を疑似体験できる図上訓練ゲーム。カードを用いて様々な避難者への対応を考える実践的教材。</p>
-        <a class="resource-link" href="http://www.pref.shizuoka.jp/bousai/hug/" target="_blank" rel="noopener">サイトへ →</a>
-      </div>
-
-      <div class="resource-card show-kids show-leader">
-        <div class="resource-header"><span class="resource-badge">eラーニング・消防庁</span></div>
-        <h3>🔥 防災危機管理eカレッジ（消防庁）</h3>
-        <p>地震・火災・津波など多数のコースを無料受講可能。自学自習や地域の防災リーダー研修の補助教材として活用できる。</p>
-        <a class="resource-link" href="https://www.fdma.go.jp/relocation/e-college/index.html" target="_blank" rel="noopener">サイトへ →</a>
       </div>
       
     </div>
@@ -812,7 +908,10 @@ footer strong{color:#fff}
 </section>
 
 <footer>
-  <strong>防災教育・計画 づくりナビ</strong><br/>
+  <strong>
+    <span class="show-kids">ぼうさい探検隊 レポートづくり</span>
+    <span class="hide-kids">防災教育・計画 づくりナビ</span>
+  </strong><br/>
   本サイトは防災に関する取り組みの設計を支援することを目的として作成されました。<br/>
   掲載リンク先の内容については各機関にお問い合わせください。
 </footer>
@@ -820,6 +919,7 @@ footer strong{color:#fff}
 <script>
 /*── モード管理 ──*/
 let currentMode = 'kids';
+
 function changeMode(mode) {
   document.body.setAttribute('data-mode', mode);
   currentMode = mode;
@@ -854,74 +954,100 @@ function toggleTag(el) {
 
 /*── 目標テンプレート選択 ──*/
 function selectGoal(text) {
-  // 現在のモードのタグのみリセット
-  document.querySelectorAll(`#goal-tags-${currentMode} .tag-btn`).forEach(b => b.classList.remove('selected'));
-  event.target.classList.add('selected');
+  // 先生・大人・リーダー共通の目標テキストエリアへ反映
+  document.querySelectorAll(`.tag-row.show-${currentMode} .tag-btn`).forEach(b => b.classList.remove('selected'));
+  if(event) event.target.classList.add('selected');
   document.getElementById('goal-text').value = text;
 }
 
 /*── 出力生成 ──*/
 function generateOutput() {
-  const target = document.getElementById('target-input').value || '（未入力）';
-  const subject = document.getElementById('subject-input').value || '（未入力）';
-  const time = document.getElementById('time').value;
-  const season = document.getElementById('season').value;
-  const unitName = document.getElementById('unit-name').value || '（未入力）';
-  const region = document.getElementById('region').value || '（指定なし）';
-  const goalText = document.getElementById('goal-text').value || '（未入力）';
-  
-  // モード別テキストエリアの取得
-  const introEl = document.getElementById('intro' + (currentMode==='kids' ? '' : '-'+currentMode));
-  const mainEl = document.getElementById('main' + (currentMode==='kids' ? '' : '-'+currentMode));
-  const wrapEl = document.getElementById('wrap' + (currentMode==='kids' ? '' : '-'+currentMode));
-  const intro = introEl.value || '（未入力）';
-  const main = mainEl.value || '（未入力）';
-  const wrap = wrapEl.value || '（未入力）';
-  const note = document.getElementById('note').value;
-
-  // 表示されている要素からのみ選択を抽出
-  const disasters = [...document.querySelectorAll('#disaster-tags .tag-btn.selected')]
-      .filter(b => b.offsetParent !== null)
-      .map(b => b.textContent.trim()).join('、') || '（未選択）';
-      
-  const literacies = [...document.querySelectorAll('input[name="literacy"]:checked')]
-      .map(i => i.nextElementSibling.textContent.trim()).join(' / ') || '（未選択）';
-      
-  const activities = [...document.querySelectorAll('#activity-tags .tag-btn.selected')]
-      .filter(b => b.offsetParent !== null) // hidden elements have offsetParent === null
-      .map(b => b.textContent.trim()).join('、') || '（未選択）';
-      
-  const evals = [...document.querySelectorAll('input[name="eval"]:checked')]
-      .filter(i => i.parentElement.offsetParent !== null)
-      .map(i => i.parentElement.textContent.trim()).join('、') || '（未選択）';
-      
-  const materials = [...document.querySelectorAll('input[name="material"]:checked')]
-      .filter(i => i.parentElement.offsetParent !== null)
-      .map(i => i.parentElement.textContent.trim()).join('、') || '（未選択）';
-
-  // モードに応じたラベル変更
-  const targetLabel = currentMode === 'kids' ? '対象学年' : currentMode === 'adult' ? '対象（家族・職場）' : '対象組織';
-  const subjectLabel = currentMode === 'kids' ? '教科・領域' : currentMode === 'adult' ? '実施場面' : '訓練種別';
-
-  const rows = [
-    ['タイトル', unitName],
-    [targetLabel, target],
-    [subjectLabel, subject],
-    ['所要時間・時期', `${time}　／　${season}`],
-    ['扱う災害', disasters],
-    ['リテラシー段階', literacies],
-    ['地域特性', region],
-    ['目標', goalText],
-    ['1. 導入', intro],
-    ['2. 展開', main],
-    ['3. まとめ', wrap],
-    ['活動・手法', activities],
-    ['確認・評価方法', evals],
-    ['活用資機材・サイト', materials],
-  ];
-  if (note) rows.push(['備考', note]);
-
   const grid = document.getElementById('output-grid');
+  let rows = [];
+
+  if (currentMode === 'kids') {
+    // 子ども版のデータ取得
+    const grade = document.getElementById('target-input').value || '（未入力）';
+    const name = document.getElementById('kids-name').value || '（未入力）';
+    const town = document.getElementById('unit-name').value || '（未入力）';
+    const disasters = [...document.querySelectorAll('#disaster-tags .tag-btn.selected')]
+        .map(b => b.textContent.trim()).join('、') || '（未選択）';
+    const danger = document.getElementById('goal-text').value || '（未入力）';
+    const evac = document.getElementById('intro').value || '（未入力）';
+    const promise = document.getElementById('main').value || '（未入力）';
+    const learned = document.getElementById('kids-learned').value || '（未入力）';
+
+    rows = [
+      ['学年・なまえ', `${grade}　${name}`],
+      ['しらべたまち', town],
+      ['しらべた災害', disasters],
+      ['まちのあぶない場所', danger],
+      ['にげる場所', evac],
+      ['かぞくとのやくそく', promise],
+      ['わかったこと', learned]
+    ];
+    
+    // 子ども向けプレビューデザインの微調整
+    document.querySelector('#output-section').style.border = '4px solid #ffb347';
+    document.styleSheets[0].insertRule('#output-section::before { background: #ffb347 !important; content: "ぼうさい探検レポート" !important; }', 0);
+
+  } else {
+    // 教職員・大人・防災リーダー版のデータ取得
+    const target = document.getElementById('target-input').value || '（未入力）';
+    const subject = document.getElementById('subject-input').value || '（未入力）';
+    const time = document.getElementById('time').value;
+    const season = document.getElementById('season').value;
+    const unitName = document.getElementById('unit-name').value || '（未入力）';
+    const goalText = document.getElementById('goal-text').value || '（未入力）';
+    const intro = document.getElementById('intro').value || '（未入力）';
+    const main = document.getElementById('main').value || '（未入力）';
+    const wrap = document.getElementById('wrap').value || '（未入力）';
+    const note = document.getElementById('note').value;
+
+    const disasters = [...document.querySelectorAll('#disaster-tags .tag-btn.selected')]
+        .filter(b => b.offsetParent !== null)
+        .map(b => b.textContent.trim()).join('、') || '（未選択）';
+        
+    const literacies = [...document.querySelectorAll('input[name="literacy"]:checked')]
+        .map(i => i.nextElementSibling.textContent.trim()).join(' / ') || '（未選択）';
+        
+    const activities = [...document.querySelectorAll('#activity-tags .tag-btn.selected')]
+        .filter(b => b.offsetParent !== null)
+        .map(b => b.textContent.trim()).join('、') || '（未選択）';
+        
+    const evals = [...document.querySelectorAll('input[name="eval"]:checked')]
+        .filter(i => i.parentElement.offsetParent !== null)
+        .map(i => i.parentElement.textContent.trim()).join('、') || '（未選択）';
+        
+    const materials = [...document.querySelectorAll('input[name="material"]:checked')]
+        .filter(i => i.parentElement.offsetParent !== null)
+        .map(i => i.parentElement.textContent.trim()).join('、') || '（未選択）';
+
+    const targetLabel = currentMode === 'teacher' ? '対象学年' : currentMode === 'adult' ? '対象（家族・職場）' : '対象組織';
+    const subjectLabel = currentMode === 'teacher' ? '教科・領域' : currentMode === 'adult' ? '実施場面' : '訓練種別';
+
+    rows = [
+      ['タイトル', unitName],
+      [targetLabel, target],
+      [subjectLabel, subject],
+      ['所要時間・時期', `${time}　／　${season}`],
+      ['扱う災害', disasters],
+      ['リテラシー段階', literacies],
+      ['目標', goalText],
+      ['1. 導入', intro],
+      ['2. 展開', main],
+      ['3. まとめ', wrap],
+      ['活動・手法', activities],
+      ['確認・評価方法', evals],
+      ['活用資機材・サイト', materials],
+    ];
+    if (note) rows.push(['備考', note]);
+    
+    // 大人向けプレビューデザインを戻す
+    document.querySelector('#output-section').style.border = '2px solid var(--green)';
+    document.styleSheets[0].insertRule('#output-section::before { background: var(--green) !important; content: "計画案プレビュー" !important; }', 0);
+  }
+
   grid.innerHTML = rows.map(([lbl, val]) =>
     `<div class="output-row"><div class="output-label">${lbl}</div><div class="output-val">${val.replace(/\n/g,'<br/>')}</div></div>`
   ).join('');
@@ -935,7 +1061,7 @@ function printOutput() { window.print(); }
 
 function copyOutput() {
   const rows = document.querySelectorAll('.output-row');
-  let title = currentMode === 'kids' ? '【防災授業案】' : currentMode === 'adult' ? '【防災計画案】' : '【防災訓練企画案】';
+  let title = currentMode === 'teacher' ? '【防災授業案】' : currentMode === 'adult' ? '【防災計画案】' : '【防災訓練企画案】';
   let text = title + '\n' + '='.repeat(30) + '\n';
   rows.forEach(r => {
     const lbl = r.querySelector('.output-label').textContent;
